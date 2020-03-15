@@ -46,7 +46,8 @@ public class Server {
 	                	
 	                    response.setStatusCode(HttpStatus.SC_OK);
 	                    response.setHeader("Server", SERVER_NAME);
-	                    response.setHeader("Content-type", "application/json");
+	                    response.setHeader("Content-Type", "application/json");
+	                    response.setHeader("Access-Control-Allow-Origin", "*");
 	                    
 	                    Products products = new Products();
 	                    response.setEntity(new StringEntity(products.getItems()));

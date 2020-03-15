@@ -53,7 +53,7 @@
 				<configuration>
 					<archive>
 						<manifest>
-							<mainClass>nl.plaatsoft.plaatservice.Server</mainClass>
+							<mainClass>nl.plaatsoft.plaatservice.core.Server</mainClass>
 						</manifest>
 					</archive>
 					<descriptorRefs>
