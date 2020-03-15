@@ -24,15 +24,18 @@ public class Server {
 
 	/** The Constant log. */
 	private static final Logger log = LogManager.getLogger( Server.class);
-		
-	private static String json = "{\"Java-RedSquare\":\"0.3\",\"Java-KnightsQuest\":\"0.4\",\"PlaatEnergy\":\"1.6\",\"PlaatScrum\":\"1.3\",\"PlaatProtect\":\"0.6\",\"PlaatSign\":\"1.1\",\"PlaatService\":\"0.2\",\"PlaatDishes\":\"0.1\",\"Windows-ChatCostCalc\":\"0.50\",\"Windows-WarQuest\":\"1.6\",\"Windows-RedSquare\":\"1.0\",\"Windows-PlaatStats\":\"1.1\",\"Windows-PlaatScore\":\"0.70\",\"Android-WarQuest\":\"1.0\",\"Android-RedSquare\":\"0.1\",\"Symbian-WarQuest\":\"1.0\",\"Linux-WarQuest\":\"1.0\",\"Linux-RedSquare\":\"1.0\",\"Wii-BibleQuiz\":\"0.95\",\"Wii-KnightsQuest\":\"0.1\",\"Wii-Pong2\":\"1.0\",\"Wii-RedSquare\":\"1.0\",\"Wii-SpaceBubble\":\"0.98\",\"Wii-TowerDefense\":\"0.98\",\"Drupal-Address\":\"4.2\",\"Drupal-EventNotification\":\"2.2\",\"Drupal-ChurchAdmin\":\"1.1\"}";
-		
+	
+	/** The Constant SERVER_NAME. */
+	private static final String SERVER_NAME = "PlaatService 1.0.0";
+			
 	/**
 	 * Start.
 	 */
 	public void start() {
 		
 		Config config = new Config();
+				
+		log.info("Start server http://{}:{}{}", config.getIp(), config.getPort(), config.getUri());
 		
 		HttpServer server = ServerBootstrap.bootstrap()
 				.setListenerPort(config.getPort())
@@ -42,9 +45,11 @@ public class Server {
 	                	log.info("RX: HTTP request");
 	                		              
 	                    response.setStatusCode(HttpStatus.SC_OK);
-	                    response.setHeader("Server", "PlaatServer 1.0.0");
+	                    response.setHeader("Server", SERVER_NAME);
 	                    response.setHeader("Content-type", "application/json");
-	                    response.setEntity(new StringEntity(json));
+	                    
+	                    Products products = new Products();
+	                    response.setEntity(new StringEntity(products.getItems()));
 	                    
 	                    log.info("TX: HTTP response 0x200");
 	                }
@@ -62,8 +67,7 @@ public class Server {
 	 * @param args the arguments
 	 */
 	public static void main(String[] args) {
-        log.info("Server Starts");
-        
+                
         Server server = new Server();
         server.start();
     }
