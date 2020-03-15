@@ -35,6 +35,16 @@ public class Config {
 	/** The uri Product. */
 	private String productUri;
 	
+	/** The database url. */
+	private String databaseUrl;
+	
+	/** The database username. */
+	private String databaseUsername;
+	
+	/** The database password. */
+	private String databasePassword;
+	
+	
 	/**
 	 * Instantiates a new config.
 	 */
@@ -68,6 +78,14 @@ public class Config {
 			productUri = prop.getProperty("productUri");
 			log.info("productUri={}",productUri);
 			
+			databaseUrl = prop.getProperty("databaseUrl");
+			log.info("databaseUrl={}",databaseUrl);
+			
+			databaseUsername = prop.getProperty("databaseUsername");
+			log.info("databaseUsername={}",databaseUsername);
+			
+			databasePassword = prop.getProperty("databasePassword");
+			
 		} catch (Exception e) {
 			log.error(e.getMessage());
 		} 
@@ -83,7 +101,7 @@ public class Config {
 	}
 
 	/**
-	 * Gets the version uri
+	 * Gets the version uri.
 	 *
 	 * @return the version uri
 	 */
@@ -92,7 +110,7 @@ public class Config {
 	}
 	
 	/**
-	 * Gets the product uri
+	 * Gets the product uri.
 	 *
 	 * @return the product uri
 	 */
@@ -107,5 +125,41 @@ public class Config {
 	 */
 	public String getIp() {
 		return ip;
+	}
+
+	/**
+	 * Gets the database password.
+	 *
+	 * @return the database password
+	 */
+	public String getDatabasePassword() {
+		return databasePassword;
+	}
+
+	/**
+	 * Gets the database url.
+	 *
+	 * @return the database url
+	 */
+	public String getDatabaseUrl() {
+		return databaseUrl;
+	}
+
+	/**
+	 * Gets the database username.
+	 *
+	 * @return the database username
+	 */
+	public String getDatabaseUsername() {
+		return databaseUsername;
+	}
+
+	/**
+	 * Sets the database password.
+	 *
+	 * @param databasePassword the new database password
+	 */
+	public void setDatabasePassword(String databasePassword) {
+		this.databasePassword = databasePassword;
 	}
 }
