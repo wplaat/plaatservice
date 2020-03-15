@@ -1,11 +1,13 @@
 package nl.plaatsoft.plaatservice.core;
 
 import java.io.IOException;
+import java.net.URLDecoder;
 
 import org.apache.http.HttpException;
 import org.apache.http.HttpRequest;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
+import org.apache.http.client.utils.URIBuilder;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.bootstrap.HttpServer;
 import org.apache.http.impl.bootstrap.ServerBootstrap;
@@ -27,7 +29,38 @@ public class Server {
 	
 	/** The Constant SERVER_NAME. */
 	private static final String SERVER_NAME = "PlaatService 1.0.0";
-			
+		
+	/**
+	 * product handler.
+	 *
+	 * @return the http request handler
+	 */
+	private HttpRequestHandler productHandler() {
+		
+		return new HttpRequestHandler() {
+            public void handle(HttpRequest request, HttpResponse response, HttpContext context) throws HttpException, IOException {
+            	
+            	log.info("RX: {}", request);
+            	
+            			            			
+            	//log.info("product=",URLDecoder.decode(request.getRequestLine().toString(), "UTF-8"));
+            	
+				String product = (String) request.getParams().getParameter("product");
+            	log.info("product={}", product);
+            	
+            	String version = (String) request.getParams().getParameter("version");
+            	log.info("version={}", version);
+            	
+                response.setStatusCode(HttpStatus.SC_OK);
+                response.setHeader("Server", SERVER_NAME);
+                response.setHeader("Content-Type", "application/json");
+                response.setHeader("Access-Control-Allow-Origin", "*");
+                
+                	                  	                   
+                log.info("TX: {}", response.getStatusLine());
+            }};
+	}
+	
 	/**
 	 * Version handler.
 	 *
@@ -51,34 +84,7 @@ public class Server {
                 log.info("TX: {}", response.getStatusLine());
             }};
 	}
-	
-	/**
-	 * product handler.
-	 *
-	 * @return the http request handler
-	 */
-	private HttpRequestHandler productHandler() {
 		
-		return new HttpRequestHandler() {
-            public void handle(HttpRequest request, HttpResponse response, HttpContext context) throws HttpException, IOException {
-            	
-            	log.info("RX: {}", request);
-
-				String product = context.getAttribute("product").toString();
-            	log.info("product={}", product);
-            	
-                response.setStatusCode(HttpStatus.SC_OK);
-                response.setHeader("Server", SERVER_NAME);
-                response.setHeader("Content-Type", "application/json");
-                response.setHeader("Access-Control-Allow-Origin", "*");
-                
-                Products products = new Products();
-                response.setEntity(new StringEntity(products.getItems()));
-                	                  	                   
-                log.info("TX: {}", response.getStatusLine());
-            }};
-	}
-	
 	/**
 	 * Start.
 	 */
@@ -98,7 +104,7 @@ public class Server {
 			server.start();
 			
 		} catch (Exception e) {
-			log.info("Error {}", e.getMessage());
+			log.error("Error {}", e.getMessage());
 		}
 	}
 	
