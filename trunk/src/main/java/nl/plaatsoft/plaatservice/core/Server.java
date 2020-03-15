@@ -1,6 +1,7 @@
 package nl.plaatsoft.plaatservice.core;
 
 import java.io.IOException;
+import java.sql.SQLException;
 
 import org.apache.http.HttpException;
 import org.apache.http.HttpRequest;
@@ -14,6 +15,8 @@ import org.apache.http.protocol.HttpRequestHandler;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
+import nl.plaatsoft.plaatservice.dao.ProductDao;
 
 /**
  * The Class Server.
@@ -85,12 +88,19 @@ public class Server {
 	 */
 	public void start() {
 		
-		Config config = new Config();
-				
-		log.info("Start server http://{}:{}", config.getIp(), config.getPort());
 		try {
-			 
-			 HttpServer server = ServerBootstrap.bootstrap()
+			
+			Config config = new Config();
+		
+			log.info("Connect to database {}",config.getDatabaseUrl());
+			
+			ProductDao productDao = new ProductDao();
+			productDao.connect(config.getDatabaseDriver(), config.getDatabaseUrl(), config.getDatabaseUsername(), config.getDatabasePassword());
+			productDao.create();
+				 
+			log.info("Start server http://{}:{}", config.getIp(), config.getPort());
+			
+			HttpServer server = ServerBootstrap.bootstrap()
 				.setListenerPort(config.getPort())
 				.registerHandler(config.getVersionUri(), versionHandler())
 				.registerHandler(config.getProductUri(), productHandler())

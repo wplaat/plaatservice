@@ -32,6 +32,8 @@ public class BaseDao {
 	 */
 	public void connect(String driver, String url, String username, String password) throws SQLException, ClassNotFoundException {
 		
+		log.debug("connect");
+		
 		Class.forName(driver); 
 		
 		Properties props = new Properties();
@@ -47,6 +49,9 @@ public class BaseDao {
 	 * @throws SQLException the SQL exception
 	 */
 	public void close() throws SQLException {
+		
+		log.debug("close");
+		
 		conn.close();
 	}
 	

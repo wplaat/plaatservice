@@ -15,16 +15,23 @@ import nl.plaatsoft.plaatservice.dao.ProductDao;
  */
 public class ProductDaoTest {
 
-	ProductDao database;
+	/** The productDao. */
+	ProductDao productDao;
 	
+	/**
+	 * Before.
+	 *
+	 * @throws SQLException the SQL exception
+	 * @throws ClassNotFoundException the class not found exception
+	 */
 	@Before
 	public void before() throws SQLException, ClassNotFoundException {
 		Config config = new Config();
 		
-		database = new ProductDao();
-		database.connect(config.getDatabaseDriver(), config.getDatabaseUrl(), config.getDatabaseUsername(), config.getDatabasePassword());
-		database.drop(); 
-		database.create();
+		productDao = new ProductDao();
+		productDao.connect(config.getDatabaseDriver(), config.getDatabaseUrl(), config.getDatabaseUsername(), config.getDatabasePassword());
+		productDao.drop(); 
+		productDao.create();
 	}
 	
 	/**
@@ -35,23 +42,46 @@ public class ProductDaoTest {
 	@Test
 	public void insertFind() throws SQLException {
 		
-		database.insert("PlaatService","0.4.0","Windows10");
-		int pid = database.getId("PlaatService","0.4.0","Windows10");
+		productDao.insert("PlaatService","0.4.0","Windows10");
+		int pid = productDao.getId("PlaatService","0.4.0","Windows10");
 		
 		assertEquals(1, pid);
+		
+		productDao.close();
 	}
 	
 	/**
-	 * insert / find.
+	 * insert / select.
 	 *
 	 * @throws SQLException the SQL exception
 	 */
 	@Test
 	public void insertSelect() throws SQLException {
 		
-		database.insert("PlaatService","0.4.0","Windows10");
-		database.select();
+		productDao.insert("PlaatService","0.4.0","Windows10");
 		
-		assertEquals(1, database.getId("PlaatService","0.4.0","Windows10"));
+		assertEquals(1, productDao.getId("PlaatService","0.4.0","Windows10"));
+		
+		productDao.select();
+		
+		productDao.close();
+	}	
+	
+	/**
+	 * Truncate select.
+	 *
+	 * @throws SQLException the SQL exception
+	 */
+	@Test
+	public void truncateSelect() throws SQLException {
+		
+		productDao.insert("PlaatService","0.4.0","Windows10");
+		productDao.truncate();
+		
+		int pid = productDao.getId("PlaatService","0.4.0","Windows10");
+		
+		assertEquals(0, pid);	
+		
+		productDao.close();
 	}	
 }

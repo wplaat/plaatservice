@@ -17,9 +17,14 @@ public class ProductDao extends BaseDao {
 	/** The Constant log. */
 	private static final Logger log = LogManager.getLogger( ProductDao.class);
 	
+	/**
+	 * Creates the.
+	 *
+	 * @throws SQLException the SQL exception
+	 */
 	public void create() throws SQLException {
 		
-		log.info("create");
+		log.debug("create");
 		
 		String sql = "CREATE TABLE IF NOT EXISTS product" +
 			"(" +
@@ -40,8 +45,8 @@ public class ProductDao extends BaseDao {
 	 */
 	public void drop() throws SQLException {
 		
-		log.info("drop");
-		String sql = "DROP TABLE product";
+		log.debug("drop");
+		String sql = "DROP TABLE IF EXISTS product";
 		execute(sql);
 	}
 	
@@ -52,7 +57,7 @@ public class ProductDao extends BaseDao {
 	 */
 	public void truncate() throws SQLException {
 		
-		log.info("truncate");
+		log.debug("truncate");
 			
 	    String sql = "TRUNCATE TABLE product";
 	    execute(sql);
@@ -68,7 +73,7 @@ public class ProductDao extends BaseDao {
 	 */
 	public void insert(String name, String version, String os) throws SQLException {
 		
-		log.info("insert");
+		log.debug("insert");
 		
 		String sql = "INSERT INTO product (pid, name, version, os) VALUES (1, '"+name+"', '"+version+"', '"+os+"')";
 		
@@ -86,7 +91,7 @@ public class ProductDao extends BaseDao {
 	 */
 	public int getId(String name, String version, String os) throws SQLException {
 		
-		log.info("select");
+		log.debug("select");
 		
 		int pid = 0;
 		Statement stmt=null;
@@ -116,7 +121,7 @@ public class ProductDao extends BaseDao {
 	 */
 	public void select() throws SQLException {
 
-	    log.info("select");
+	    log.debug("select");
 	    
 	    Statement stmt = conn.createStatement();
 	    String sql = "SELECT pid, name, version, os FROM product";
