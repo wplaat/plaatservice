@@ -29,36 +29,76 @@ public class Server {
 	private static final String SERVER_NAME = "PlaatService 1.0.0";
 			
 	/**
+	 * Version handler.
+	 *
+	 * @return the http request handler
+	 */
+	private HttpRequestHandler versionHandler() {
+		
+		return new HttpRequestHandler() {
+            public void handle(HttpRequest request, HttpResponse response, HttpContext context) throws HttpException, IOException {
+            	
+            	log.info("RX: {}", request);
+            	
+                response.setStatusCode(HttpStatus.SC_OK);
+                response.setHeader("Server", SERVER_NAME);
+                response.setHeader("Content-Type", "application/json");
+                response.setHeader("Access-Control-Allow-Origin", "*");
+                
+                Products products = new Products();
+                response.setEntity(new StringEntity(products.getItems()));
+                	                  	                   
+                log.info("TX: {}", response.getStatusLine());
+            }};
+	}
+	
+	/**
+	 * product handler.
+	 *
+	 * @return the http request handler
+	 */
+	private HttpRequestHandler productHandler() {
+		
+		return new HttpRequestHandler() {
+            public void handle(HttpRequest request, HttpResponse response, HttpContext context) throws HttpException, IOException {
+            	
+            	log.info("RX: {}", request);
+
+				String product = context.getAttribute("product").toString();
+            	log.info("product={}", product);
+            	
+                response.setStatusCode(HttpStatus.SC_OK);
+                response.setHeader("Server", SERVER_NAME);
+                response.setHeader("Content-Type", "application/json");
+                response.setHeader("Access-Control-Allow-Origin", "*");
+                
+                Products products = new Products();
+                response.setEntity(new StringEntity(products.getItems()));
+                	                  	                   
+                log.info("TX: {}", response.getStatusLine());
+            }};
+	}
+	
+	/**
 	 * Start.
 	 */
 	public void start() {
 		
 		Config config = new Config();
 				
-		log.info("Start server http://{}:{}{}", config.getIp(), config.getPort(), config.getUri());
-		
-		HttpServer server = ServerBootstrap.bootstrap()
+		log.info("Start server http://{}:{}", config.getIp(), config.getPort());
+		try {
+			 
+			 HttpServer server = ServerBootstrap.bootstrap()
 				.setListenerPort(config.getPort())
-				.registerHandler(config.getUri(), new HttpRequestHandler() {
-	                public void handle(HttpRequest request, HttpResponse response, HttpContext context) throws HttpException, IOException {
-	                	
-	                	log.info("RX: {}", request);
-	                	
-	                    response.setStatusCode(HttpStatus.SC_OK);
-	                    response.setHeader("Server", SERVER_NAME);
-	                    response.setHeader("Content-Type", "application/json");
-	                    response.setHeader("Access-Control-Allow-Origin", "*");
-	                    
-	                    Products products = new Products();
-	                    response.setEntity(new StringEntity(products.getItems()));
-	                    	                  	                   
-	                    log.info("TX: {}", response.getStatusLine());
-	                }
-	      }).create();
-	    try {
+				.registerHandler(config.getVersionUri(), versionHandler())
+				.registerHandler(config.getProductUri(), productHandler())
+				.create();
+	   
 			server.start();
-		} catch (IOException e) {
-			log.error(e.getMessage());
+			
+		} catch (Exception e) {
+			log.info("Error {}", e.getMessage());
 		}
 	}
 	

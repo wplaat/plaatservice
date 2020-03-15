@@ -29,8 +29,11 @@ public class Config {
 	/** The port. */
 	private int port;
 	
-	/** The uri. */
-	private String uri;
+	/** The uri Base. */
+	private String versionUri;
+	
+	/** The uri Product. */
+	private String productUri;
 	
 	/**
 	 * Instantiates a new config.
@@ -59,8 +62,11 @@ public class Config {
 			port = Integer.valueOf(prop.getProperty("port"));
 			log.info("port={}",port);
 			
-			uri = prop.getProperty("uri");
-			log.info("uri={}",uri);
+			versionUri = prop.getProperty("versionUri");
+			log.info("versionUri={}",versionUri);
+			
+			productUri = prop.getProperty("productUri");
+			log.info("productUri={}",productUri);
 			
 		} catch (Exception e) {
 			log.error(e.getMessage());
@@ -77,12 +83,21 @@ public class Config {
 	}
 
 	/**
-	 * Gets the uri.
+	 * Gets the version uri
 	 *
-	 * @return the uri
+	 * @return the version uri
 	 */
-	public String getUri() {
-		return uri;
+	public String getVersionUri() {
+		return versionUri;
+	}
+	
+	/**
+	 * Gets the product uri
+	 *
+	 * @return the product uri
+	 */
+	public String getProductUri() {
+		return productUri;
 	}
 	
 	/**

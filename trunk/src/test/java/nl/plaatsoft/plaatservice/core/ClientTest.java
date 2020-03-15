@@ -25,20 +25,20 @@ public class ClientTest {
 	private static final Logger log = LogManager.getLogger( ClientTest.class);
 	
 	/**
-	 * Test client.
+	 * version Url Test
 	 *
 	 * @throws ClientProtocolException the client protocol exception
 	 * @throws IOException Signals that an I/O exception has occurred.
 	 */
 	@Test
-	public void TestClient() throws ClientProtocolException, IOException {
+	public void versionUrlTest() throws ClientProtocolException, IOException {
 
 		  Config config = new Config();
 		
 		  Server server = new Server();
 		  server.start();
 		  		 		 
-		  String url = "http://" + config.getIp() + ":" + config.getPort() + config.getUri( );
+		  String url = "http://" + config.getIp() + ":" + config.getPort() + config.getVersionUri();
 		  log.info("Start client {}", url);
 		  
 		  HttpClient client = HttpClientBuilder.create().build();
