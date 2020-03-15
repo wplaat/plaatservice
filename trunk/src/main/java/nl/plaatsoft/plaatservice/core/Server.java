@@ -42,16 +42,16 @@ public class Server {
 				.registerHandler(config.getUri(), new HttpRequestHandler() {
 	                public void handle(HttpRequest request, HttpResponse response, HttpContext context) throws HttpException, IOException {
 	                	
-	                	log.info("RX: HTTP request");
-	                		              
+	                	log.info("RX: {}", request);
+	                	
 	                    response.setStatusCode(HttpStatus.SC_OK);
 	                    response.setHeader("Server", SERVER_NAME);
 	                    response.setHeader("Content-type", "application/json");
 	                    
 	                    Products products = new Products();
 	                    response.setEntity(new StringEntity(products.getItems()));
-	                    
-	                    log.info("TX: HTTP response 0x200");
+	                    	                  	                   
+	                    log.info("TX: {}", response.getStatusLine());
 	                }
 	      }).create();
 	    try {

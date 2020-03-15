@@ -1,6 +1,5 @@
 package nl.plaatsoft.plaatservice.core;
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 import java.io.IOException;
@@ -46,8 +45,8 @@ public class ClientTest {
 		  HttpGet request = new HttpGet(url);
 		  request.addHeader("accept", "application/json");	          
 		  
-		  HttpResponse response = client.execute(request);	      
-	      
+		  HttpResponse response = client.execute(request);	     
+		  	      
 	      assertTrue(response.getStatusLine().getStatusCode() == 200);
 	}
 }
