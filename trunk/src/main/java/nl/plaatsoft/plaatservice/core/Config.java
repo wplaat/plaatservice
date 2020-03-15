@@ -35,6 +35,9 @@ public class Config {
 	/** The uri Product. */
 	private String productUri;
 	
+	/** The database driver. */
+	private String databaseDriver;
+	
 	/** The database url. */
 	private String databaseUrl;
 	
@@ -77,6 +80,9 @@ public class Config {
 			
 			productUri = prop.getProperty("productUri");
 			log.info("productUri={}",productUri);
+			
+			databaseDriver = prop.getProperty("databaseDriver");
+			log.info("databaseDriver={}",databaseDriver);
 			
 			databaseUrl = prop.getProperty("databaseUrl");
 			log.info("databaseUrl={}",databaseUrl);
@@ -154,12 +160,8 @@ public class Config {
 		return databaseUsername;
 	}
 
-	/**
-	 * Sets the database password.
-	 *
-	 * @param databasePassword the new database password
-	 */
-	public void setDatabasePassword(String databasePassword) {
-		this.databasePassword = databasePassword;
+	public String getDatabaseDriver() {
+		return databaseDriver;
 	}
+	
 }

@@ -1,11 +1,8 @@
 package nl.plaatsoft.plaatservice.dao;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.Properties;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -15,30 +12,50 @@ import org.apache.logging.log4j.Logger;
  * 
  * @author wplaat
  */
-public class ProductDao {
+public class ProductDao extends BaseDao {
 
 	/** The Constant log. */
 	private static final Logger log = LogManager.getLogger( ProductDao.class);
 	
-	/** The conn. */
-	private Connection conn;
-	
-	public void connect(String url, String username, String password) throws SQLException {
+	public void create() throws SQLException {
 		
-		Properties props = new Properties();
-		props.setProperty("user", username);
-		props.setProperty("password", password);
-
-		conn = DriverManager.getConnection(url, props);
+		log.info("create");
+		
+		String sql = "CREATE TABLE IF NOT EXISTS product" +
+			"(" +
+		    	"pid bigint NOT NULL, "+
+		    	"name text, "+
+		    	"version text, "+
+		    	"os text, "+
+		    	"CONSTRAINT product_pkey PRIMARY KEY (pid) "+
+ 		    ")";
+		
+		execute(sql);
 	}
-	
+
 	/**
-	 * Close.
+	 * Drop.
 	 *
 	 * @throws SQLException the SQL exception
 	 */
-	public void close() throws SQLException {
-		conn.close();
+	public void drop() throws SQLException {
+		
+		log.info("drop");
+		String sql = "DROP TABLE product";
+		execute(sql);
+	}
+	
+	/**
+	 * Truncate.
+	 *
+	 * @throws SQLException the SQL exception
+	 */
+	public void truncate() throws SQLException {
+		
+		log.info("truncate");
+			
+	    String sql = "TRUNCATE TABLE product";
+	    execute(sql);
 	}
 	
 	/**
@@ -51,18 +68,45 @@ public class ProductDao {
 	 */
 	public void insert(String name, String version, String os) throws SQLException {
 		
-		Statement stmt = null;
+		log.info("insert");
+		
+		String sql = "INSERT INTO product (pid, name, version, os) VALUES (1, '"+name+"', '"+version+"', '"+os+"')";
+		
+		execute(sql);
+	}
+
+	/**
+	 * Gets the id.
+	 *
+	 * @param name the name
+	 * @param version the version
+	 * @param os the os
+	 * @return the id
+	 * @throws SQLException the SQL exception
+	 */
+	public int getId(String name, String version, String os) throws SQLException {
+		
+		log.info("select");
+		
+		int pid = 0;
+		Statement stmt=null;
+		
 		try {
 			stmt = conn.createStatement();
-			String sql = "INSERT INTO product (pid, name, version, os) VALUES (1, '"+name+"', '"+version+"', '"+os+"')";
-			stmt.executeUpdate(sql);
-		} catch (Exception e) {
-			
+			String sql = "SELECT pid FROM product where name='"+name+"' and version='"+version+"' and os='"+os+"'";
+			ResultSet rs = stmt.executeQuery(sql);
+
+			while(rs.next()){
+				pid  = rs.getInt("pid");
+			}
+		} catch (Exception e) {	
+			log.error(e.getMessage());
 		} finally {
 			if (stmt!=null) {
 				stmt.close();
 			}
-		}
+		}	
+	    return pid;  
 	}
 	
 	/**
@@ -73,6 +117,7 @@ public class ProductDao {
 	public void select() throws SQLException {
 
 	    log.info("select");
+	    
 	    Statement stmt = conn.createStatement();
 	    String sql = "SELECT pid, name, version, os FROM product";
 	    
@@ -89,44 +134,5 @@ public class ProductDao {
 
 	    rs.close();
 	    stmt.close();
-	}
-	
-	/**
-	 * Truncate.
-	 *
-	 * @throws SQLException the SQL exception
-	 */
-	public void truncate() throws SQLException {
-		
-		log.info("truncate");
-	    Statement stmt = conn.createStatement();
-	    String sql = "TRUNCATE TABLE product";
-	    stmt.executeUpdate(sql);
-	    stmt.close();     
-	}
-	
-	/**
-	 * Gets the id.
-	 *
-	 * @param name the name
-	 * @param version the version
-	 * @param os the os
-	 * @return the id
-	 * @throws SQLException the SQL exception
-	 */
-	public int getId(String name, String version, String os) throws SQLException {
-		
-		int pid = 0;
-		log.info("insert");
-	    Statement stmt = conn.createStatement();
-	    String sql = "SELECT pid FROM product where name='"+name+"' and version='"+version+"' and os='"+os+"'";
-	    ResultSet rs = stmt.executeQuery(sql);
-
-	    while(rs.next()){
-	       pid  = rs.getInt("pid");
-	    }
-	    stmt.close();    
-	    
-	    return pid;  
 	}
 }

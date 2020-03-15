@@ -24,9 +24,6 @@ public class Server {
 
 	/** The Constant log. */
 	private static final Logger log = LogManager.getLogger( Server.class);
-	
-	/** The Constant SERVER_NAME. */
-	private static final String SERVER_NAME = "PlaatService 1.0.0";
 		
 	/**
 	 * product handler.
@@ -50,7 +47,7 @@ public class Server {
             	log.info("version={}", version);
             	
                 response.setStatusCode(HttpStatus.SC_OK);
-                response.setHeader("Server", SERVER_NAME);
+                response.setHeader("Server", General.APP_NAME+" "+General.APP_VERSION);
                 response.setHeader("Content-Type", "application/json");
                 response.setHeader("Access-Control-Allow-Origin", "*");
                 
@@ -72,7 +69,7 @@ public class Server {
             	log.info("RX: {}", request);
             	
                 response.setStatusCode(HttpStatus.SC_OK);
-                response.setHeader("Server", SERVER_NAME);
+                response.setHeader("Server", General.APP_NAME+" "+General.APP_VERSION);
                 response.setHeader("Content-Type", "application/json");
                 response.setHeader("Access-Control-Allow-Origin", "*");
                 

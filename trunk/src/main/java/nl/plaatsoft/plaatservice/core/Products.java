@@ -36,7 +36,7 @@ public class Products {
 		items.put("PlaatScrum", "1.3");
 		items.put("PlaatProtect", "0.6");
 		items.put("PlaatSign", "1.1");
-		items.put("PlaatService", "0.3.0");
+		items.put(General.APP_NAME, General.APP_VERSION);
 		items.put("PlaatDishes", "0.1");
 		items.put("Windows-ChatCostCalc", "0.50");
 		items.put("Windows-WarQuest", "1.6");

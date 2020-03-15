@@ -18,12 +18,13 @@ public class ProductDaoTest {
 	ProductDao database;
 	
 	@Before
-	public void before() throws SQLException {
+	public void before() throws SQLException, ClassNotFoundException {
 		Config config = new Config();
 		
 		database = new ProductDao();
-		database.connect(config.getDatabaseUrl(), config.getDatabaseUsername(), config.getDatabasePassword());
-		database.truncate();
+		database.connect(config.getDatabaseDriver(), config.getDatabaseUrl(), config.getDatabaseUsername(), config.getDatabasePassword());
+		database.drop(); 
+		database.create();
 	}
 	
 	/**
