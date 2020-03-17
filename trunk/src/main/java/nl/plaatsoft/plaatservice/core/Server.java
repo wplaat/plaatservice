@@ -2,6 +2,7 @@ package nl.plaatsoft.plaatservice.core;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -20,8 +21,8 @@ import org.apache.http.protocol.HttpRequestHandler;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import nl.plaatsoft.plaatservice.dao.Product;
 import nl.plaatsoft.plaatservice.dao.ProductDao;
-import nl.plaatsoft.plaatservice.model.Product;
 
 /**
  * The Class Server.
@@ -145,16 +146,7 @@ public class Server {
         
         ProductDao productRepository = new ProductDao(entityManager);
         
-        Product product1 = new Product("PlaatService", "0.3.0", "Windows10");
-        productRepository.save(product1);
-        
-        Product product2 = new Product("PlaatService", "0.4.0", "Windows10");
-        productRepository.save(product2);
-        
-        Product product3 = new Product("PlaatService", "0.5.0", "Windows10");
-        productRepository.save(product3);
-               
-        List<Product> products = productRepository.findAll();
+        List <Product> products =  productRepository.findByName("PlaatService", "0.5.0", "Windows10");
         
         return true;
 	}

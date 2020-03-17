@@ -1,4 +1,4 @@
-package nl.plaatsoft.plaatservice.model;
+package nl.plaatsoft.plaatservice.dao;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -7,6 +7,8 @@ import javax.persistence.Table;
 
 /**
  * The Class Product.
+ * 
+ * @author wplaat
  */
 @Entity
 @Table(name = "product")
@@ -23,9 +25,22 @@ public class Product {
     /** The version. */
     private String version;
     
+    /** The os. */
+    private String os;
+    
+    /**
+     * Instantiates a new product.
+     */
     public Product() {    	  
     }
     	
+	/**
+	 * Instantiates a new product.
+	 *
+	 * @param name the name
+	 * @param version the version
+	 * @param os the os
+	 */
 	public Product(String name, String version, String os) {
 		super();
 		this.name = name;
@@ -33,9 +48,6 @@ public class Product {
 		this.os = os;
 	}
 	
-	/** The os. */
-    private String os;
-
 	/**
 	 * Gets the name.
 	 *

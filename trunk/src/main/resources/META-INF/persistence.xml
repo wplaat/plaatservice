@@ -6,7 +6,7 @@
     <persistence-unit name="PlaatService" transaction-type="RESOURCE_LOCAL">
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
 
-        <class>nl.plaatsoft.plaatservice.model.Product</class>
+        <class>nl.plaatsoft.plaatservice.dao.Product</class>
                 
         <properties>
             <property name="javax.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver" />

@@ -146,6 +146,11 @@ public class Config {
 		return databaseUsername;
 	}
 
+	/**
+	 * Gets the database driver.
+	 *
+	 * @return the database driver
+	 */
 	public String getDatabaseDriver() {
 		return databaseDriver;
 	}
