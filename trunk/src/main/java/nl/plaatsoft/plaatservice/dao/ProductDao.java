@@ -82,14 +82,4 @@ public class ProductDao {
         }
         return Optional.empty();
     }
-    
-    /**
-     * Truncate.
-     *
-     * @param entityType the entity type
-     */
-    public void truncate (Class<Product> entityType) {
-    	String query = new StringBuilder("DELETE FROM ").append(entityType.getSimpleName()).append(" e").toString();
-    	entityManager.createNativeQuery(query);
-    }
 }

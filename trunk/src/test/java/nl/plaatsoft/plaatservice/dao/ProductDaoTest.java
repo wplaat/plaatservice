@@ -32,32 +32,20 @@ public class ProductDaoTest {
 	     EntityManager entityManager = entityManagerFactory.createEntityManager();	       
 	     productRepository = new ProductDao(entityManager);
 	}
-	
-	/**
-	 * Find by name null.
-	 */
-	@Test
-	public void findByNameNull() {
 		
-        productRepository.truncate(Product.class);
-	        	        	               
-        Optional<Product> product =  productRepository.findByName("PlaatService", "0.5.0", "Windows10");
-        assertTrue(product.isPresent()==false);   
-	}
-	
 	/**
-	 * Find test.
+	 * Find All.
 	 */
 	@Test
 	public void findAll() {
 		        
-        Product product1 = new Product("PlaatService", "0.3.0", "Windows10");
+        Product product1 = new Product("PlaatService", "0.1.0", "Windows10");
         productRepository.save(product1);
         
-        Product product2 = new Product("PlaatService", "0.4.0", "Windows10");
+        Product product2 = new Product("PlaatService", "0.2.0", "Windows10");
         productRepository.save(product2);
         
-        Product product3 = new Product("PlaatService", "0.5.0", "Windows10");
+        Product product3 = new Product("PlaatService", "0.3.0", "Windows10");
         productRepository.save(product3);
                
         List<Product> products = productRepository.findAll();
@@ -70,16 +58,43 @@ public class ProductDaoTest {
 	 */
 	@Test
 	public void findByName() {
-		    
-        productRepository.truncate(Product.class);
-	        	        
-	    Product product2 = new Product("PlaatService", "0.6.0", "Windows10");
+		    	        	        
+	    Product product2 = new Product("PlaatService", "0.4.0", "Windows10");
 	    productRepository.save(product2);
 	        
-	    Product product3 = new Product("PlaatService", "0.7.0", "Windows10");
+	    Product product3 = new Product("PlaatService", "0.5.0", "Windows10");
 	    productRepository.save(product3);
 	               
+	    Optional<Product> product =  productRepository.findByName("PlaatService", "0.4.0", "Windows10");
+	    assertEquals("0.4.0", product.get().getVersion());   
+	}
+	
+	
+	/**
+	 * Find by name not found
+	 */
+	@Test
+	public void findByNameNotFound () {
+		    	        	        
+	    Product product2 = new Product("PlaatService", "0.4.0", "Windows10");
+	    productRepository.save(product2);
+	        
+	    Product product3 = new Product("PlaatService", "0.5.0", "Windows10");
+	    productRepository.save(product3);
+	               
+	    // New entry is created
 	    Optional<Product> product =  productRepository.findByName("PlaatService", "0.6.0", "Windows10");
-	    assertEquals("0.6.0", product.get().getVersion());   
+	    assertTrue(product.isPresent()==true);   
+	    assertEquals("3", product.get().getId().toString());  
+	}
+	
+	/**
+	 * Find by name null.
+	 */
+	@Test
+	public void findByNameNull() {
+			        	        	               
+        Optional<Product> product =  productRepository.findByName("PlaatService", "0.6.0", "Windows10");
+        assertEquals("1", product.get().getId().toString());   
 	}
 }
