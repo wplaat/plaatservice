@@ -12,6 +12,7 @@ import javax.persistence.Persistence;
 import org.junit.Before;
 import org.junit.Test;
 
+
 /**
  * The Class ProductDaoTest.
  * 
