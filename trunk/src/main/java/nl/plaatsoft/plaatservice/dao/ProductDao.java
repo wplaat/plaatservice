@@ -56,10 +56,13 @@ public class ProductDao {
                 .getSingleResult();
    		
     		 return Optional.of(product);
+    		 
     	 } catch (Exception e) {
     		 
+    		 // Not found, create it!
+    		 Product product = new Product(name, version, os);
+    		 return save(product);
     	 }    	
-    	 return Optional.empty();
     }
     
     /**

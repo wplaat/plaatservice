@@ -101,7 +101,7 @@ public class Server {
             	
             	Optional<Product> product = productRepository.findByName(name, version, os);
             	
-            	String content = "null";
+            	String content = "";
             	if (product.isPresent()) {
             		content = product.get().getId().toString();
             	} 
@@ -112,8 +112,7 @@ public class Server {
                 response.setHeader("Server", General.APP_NAME+" "+General.APP_VERSION);
                 response.setHeader("Content-Type", "application/json");
                 response.setHeader("Access-Control-Allow-Origin", "*");
-                
-                	                  	                   
+                                	                  	                   
                 log.info("TX: {}", response.getStatusLine());
             }};
 	}
