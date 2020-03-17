@@ -30,30 +30,37 @@ public class Products {
 		ObjectMapper mapper = new ObjectMapper();
 			
 		TreeMap<String, String> items = new TreeMap<String, String>();
-		items.put("Java-RedSquare", "0.3.0");
-		items.put("Java-KnightsQuest", "0.4");
+		items.put(General.APP_NAME, General.APP_VERSION);
 		items.put("PlaatEnergy", "1.6");
 		items.put("PlaatScrum", "1.3");
 		items.put("PlaatProtect", "0.6");
-		items.put("PlaatSign", "1.1");
-		items.put(General.APP_NAME, General.APP_VERSION);
+		items.put("PlaatSign", "1.1");		
 		items.put("PlaatDishes", "0.1");
+		
+		items.put("Java-RedSquare", "0.3.0");
+		items.put("Java-KnightsQuest", "0.4");
+		
 		items.put("Windows-ChatCostCalc", "0.50");
 		items.put("Windows-WarQuest", "1.6");
 		items.put("Windows-RedSquare", "1.0");
 		items.put("Windows-PlaatStats", "1.1");
 		items.put("Windows-PlaatScore", "0.70");
+		
 		items.put("Android-WarQuest", "1.0");
 		items.put("Android-RedSquare", "0.1");
+		
 		items.put("Symbian-WarQuest", "1.0");
+		
 		items.put("Linux-WarQuest", "1.0");
 		items.put("Linux-RedSquare", "1.0");
+		
 		items.put("Wii-BibleQuiz", "0.95");
 		items.put("Wii-KnightsQuest", "0.1");
 		items.put("Wii-Pong2", "1.0");
 		items.put("Wii-RedSquare", "1.0");
 		items.put("Wii-SpaceBubble", "0.98");
 		items.put("Wii-TowerDefense", "0.98");
+		
 		items.put("Drupal-Address", "4.2");
 		items.put("Drupal-EventNotification", "2.2");
 		items.put("Drupal-ChurchAdmin", "1.1");

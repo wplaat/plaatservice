@@ -2,86 +2,45 @@ package nl.plaatsoft.plaatservice.dao;
 
 import static org.junit.Assert.assertEquals;
 
-import java.sql.SQLException;
+import java.util.List;
 
-import org.junit.Before;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+
 import org.junit.Test;
 
-import nl.plaatsoft.plaatservice.core.Config;
-import nl.plaatsoft.plaatservice.dao.ProductDao;
+import nl.plaatsoft.plaatservice.model.Product;
 
 /**
  * The Class ProductDaoTest.
+ * 
+ * @author wplaat
  */
 public class ProductDaoTest {
 
-	/** The productDao. */
-	ProductDao productDao;
-	
 	/**
-	 * Before.
-	 *
-	 * @throws SQLException the SQL exception
-	 * @throws ClassNotFoundException the class not found exception
+	 * Find test.
 	 */
-	@Before
-	public void before() throws SQLException, ClassNotFoundException {
-		Config config = new Config();
+	@Test
+	public void findTest() {
 		
-		productDao = new ProductDao();
-		productDao.connect(config.getDatabaseDriver(), config.getDatabaseUrl(), config.getDatabaseUsername(), config.getDatabasePassword());
-		productDao.drop(); 
-		productDao.create();
+        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("PlaatService");
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        
+        ProductDao productRepository = new ProductDao(entityManager);
+        
+        Product product1 = new Product("PlaatService", "0.3.0", "Windows10");
+        productRepository.save(product1);
+        
+        Product product2 = new Product("PlaatService", "0.4.0", "Windows10");
+        productRepository.save(product2);
+        
+        Product product3 = new Product("PlaatService", "0.5.0", "Windows10");
+        productRepository.save(product3);
+               
+        List<Product> products = productRepository.findAll();
+        
+        assertEquals(3, products.size());        
 	}
-	
-	/**
-	 * insert / find.
-	 *
-	 * @throws SQLException the SQL exception
-	 */
-	@Test
-	public void insertFind() throws SQLException {
-		
-		productDao.insert("PlaatService","0.4.0","Windows10");
-		int pid = productDao.getId("PlaatService","0.4.0","Windows10");
-		
-		assertEquals(1, pid);
-		
-		productDao.close();
-	}
-	
-	/**
-	 * insert / select.
-	 *
-	 * @throws SQLException the SQL exception
-	 */
-	@Test
-	public void insertSelect() throws SQLException {
-		
-		productDao.insert("PlaatService","0.4.0","Windows10");
-		
-		assertEquals(1, productDao.getId("PlaatService","0.4.0","Windows10"));
-		
-		productDao.select();
-		
-		productDao.close();
-	}	
-	
-	/**
-	 * Truncate select.
-	 *
-	 * @throws SQLException the SQL exception
-	 */
-	@Test
-	public void truncateSelect() throws SQLException {
-		
-		productDao.insert("PlaatService","0.4.0","Windows10");
-		productDao.truncate();
-		
-		int pid = productDao.getId("PlaatService","0.4.0","Windows10");
-		
-		assertEquals(0, pid);	
-		
-		productDao.close();
-	}	
 }

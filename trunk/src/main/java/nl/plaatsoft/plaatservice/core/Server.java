@@ -1,7 +1,11 @@
 package nl.plaatsoft.plaatservice.core;
 
 import java.io.IOException;
-import java.sql.SQLException;
+import java.util.List;
+
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 
 import org.apache.http.HttpException;
 import org.apache.http.HttpRequest;
@@ -17,6 +21,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import nl.plaatsoft.plaatservice.dao.ProductDao;
+import nl.plaatsoft.plaatservice.model.Product;
 
 /**
  * The Class Server.
@@ -28,6 +33,9 @@ public class Server {
 	/** The Constant log. */
 	private static final Logger log = LogManager.getLogger( Server.class);
 		
+	/** The config. */
+	private Config config = new Config();
+	
 	/**
 	 * product handler.
 	 *
@@ -40,14 +48,30 @@ public class Server {
             	
             	log.info("RX: {}", request);
             	
-            			            			
+            	String uri = request.getRequestLine().getUri();
+            	String method = request.getRequestLine().getMethod();
+            	String protocol = request.getRequestLine().getProtocolVersion().toString();
+            	log.info("URI={}", uri);
+            	log.info("METHOD={}", method);
+            	log.info("PROTOCOL={}", protocol);
+            	
+            	
+            	
+                           
+            	
+            	/*if (request instanceof HttpEntityEnclosingRequest) {
+                    final HttpEntity entity = ((HttpEntityEnclosingRequest) request).getEntity();
+                                  
+                    log.info(entity.getContentLength());
+            	}*/
+            	            			            		
             	//log.info("product=",URLDecoder.decode(request.getRequestLine().toString(), "UTF-8"));
             	
-				String product = (String) request.getParams().getParameter("product");
+				/*String product = (String) request.getParams().getParameter("product");
             	log.info("product={}", product);
             	
             	String version = (String) request.getParams().getParameter("version");
-            	log.info("version={}", version);
+            	log.info("version={}", version);*/
             	
                 response.setStatusCode(HttpStatus.SC_OK);
                 response.setHeader("Server", General.APP_NAME+" "+General.APP_VERSION);
@@ -75,7 +99,7 @@ public class Server {
                 response.setHeader("Server", General.APP_NAME+" "+General.APP_VERSION);
                 response.setHeader("Content-Type", "application/json");
                 response.setHeader("Access-Control-Allow-Origin", "*");
-                
+                                
                 Products products = new Products();
                 response.setEntity(new StringEntity(products.getItems()));
                 	                  	                   
@@ -88,16 +112,7 @@ public class Server {
 	 */
 	public void start() {
 		
-		try {
-			
-			Config config = new Config();
-		
-			log.info("Connect to database {}",config.getDatabaseUrl());
-			
-			ProductDao productDao = new ProductDao();
-			productDao.connect(config.getDatabaseDriver(), config.getDatabaseUrl(), config.getDatabaseUsername(), config.getDatabasePassword());
-			productDao.create();
-				 
+		try {				 
 			log.info("Start server http://{}:{}", config.getIp(), config.getPort());
 			
 			HttpServer server = ServerBootstrap.bootstrap()
@@ -113,14 +128,47 @@ public class Server {
 		}
 	}
 	
+	
+	/**
+	 * Inits the.
+	 *
+	 * @return true, if successful
+	 */
+	public boolean init() {		
+		
+		boolean result = true;
+		
+		log.info("Connect to database {}",config.getDatabaseUrl());
+		
+		EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("PlaatService");
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        
+        ProductDao productRepository = new ProductDao(entityManager);
+        
+        Product product1 = new Product("PlaatService", "0.3.0", "Windows10");
+        productRepository.save(product1);
+        
+        Product product2 = new Product("PlaatService", "0.4.0", "Windows10");
+        productRepository.save(product2);
+        
+        Product product3 = new Product("PlaatService", "0.5.0", "Windows10");
+        productRepository.save(product3);
+               
+        List<Product> products = productRepository.findAll();
+        
+        return true;
+	}
+	
 	/**
 	 * The main method.
 	 *
 	 * @param args the arguments
 	 */
 	public static void main(String[] args) {
-                
+		
         Server server = new Server();
-        server.start();
+        if (server.init()) {
+        	server.start();
+        }
     }
 }

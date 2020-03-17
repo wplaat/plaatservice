@@ -18,9 +18,9 @@
     
     <Loggers>
     
-    	<AsyncLogger name="nl.plaatsoft" level="DEBUG"/>
+    	<AsyncLogger name="nl.plaatsoft" level="INFO"/>
   	
-        <AsyncRoot level="ALL">
+        <AsyncRoot level="ERROR">
         	<AppenderRef ref="RollingFile"/>
             <AppenderRef ref="Console"/>
         </AsyncRoot>

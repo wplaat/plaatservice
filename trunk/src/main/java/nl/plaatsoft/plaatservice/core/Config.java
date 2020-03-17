@@ -69,27 +69,13 @@ public class Config {
 				prop.load(inputStream2);
 			}
  
-			ip = prop.getProperty("ip");
-			log.info("ip={}",ip);
-			
+			ip = prop.getProperty("ip");			
 			port = Integer.valueOf(prop.getProperty("port"));
-			log.info("port={}",port);
-			
-			versionUri = prop.getProperty("versionUri");
-			log.info("versionUri={}",versionUri);
-			
+			versionUri = prop.getProperty("versionUri");			
 			productUri = prop.getProperty("productUri");
-			log.info("productUri={}",productUri);
-			
 			databaseDriver = prop.getProperty("databaseDriver");
-			log.info("databaseDriver={}",databaseDriver);
-			
 			databaseUrl = prop.getProperty("databaseUrl");
-			log.info("databaseUrl={}",databaseUrl);
-			
-			databaseUsername = prop.getProperty("databaseUsername");
-			log.info("databaseUsername={}",databaseUsername);
-			
+			databaseUsername = prop.getProperty("databaseUsername");			
 			databasePassword = prop.getProperty("databasePassword");
 			
 		} catch (Exception e) {
