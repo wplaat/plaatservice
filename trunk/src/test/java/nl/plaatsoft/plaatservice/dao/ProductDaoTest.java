@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 import java.util.List;
+import java.util.Optional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -11,7 +12,6 @@ import javax.persistence.Persistence;
 
 import org.junit.Before;
 import org.junit.Test;
-
 
 /**
  * The Class ProductDaoTest.
@@ -41,8 +41,8 @@ public class ProductDaoTest {
 		
         productRepository.truncate(Product.class);
 	        	        	               
-        Product product =  productRepository.findByName("PlaatService", "0.5.0", "Windows10");
-        assertTrue(product==null);   
+        Optional<Product> product =  productRepository.findByName("PlaatService", "0.5.0", "Windows10");
+        assertTrue(product.isPresent()==false);   
 	}
 	
 	/**
@@ -79,7 +79,7 @@ public class ProductDaoTest {
 	    Product product3 = new Product("PlaatService", "0.7.0", "Windows10");
 	    productRepository.save(product3);
 	               
-	    Product product =  productRepository.findByName("PlaatService", "0.6.0", "Windows10");
-	    assertEquals("0.6.0", product.getVersion());   
+	    Optional<Product> product =  productRepository.findByName("PlaatService", "0.6.0", "Windows10");
+	    assertEquals("0.6.0", product.get().getVersion());   
 	}
 }

@@ -46,21 +46,20 @@ public class ProductDao {
      * @param os the os
      * @return the list
      */
-    public Product findByName(String name, String version, String os) {
+    public Optional<Product> findByName(String name, String version, String os) {
     	
-    	Product product = null;
-    	
-    	try {
-    		product = entityManager.createQuery("SELECT a FROM Product a WHERE a.name=:name AND a.version=:version AND a.os=:os", Product.class)
+    	 try {    		     	
+    		 Product product = entityManager.createQuery("SELECT a FROM Product a WHERE a.name=:name AND a.version=:version AND a.os=:os", Product.class)
                 .setParameter("name", name)
                 .setParameter("version", version)
                 .setParameter("os", os)
                 .getSingleResult();
-    	} catch (Exception e) {
-    		// Do nothing
-    	}
-    	
-    	return product;
+   		
+    		 return Optional.of(product);
+    	 } catch (Exception e) {
+    		 
+    	 }    	
+    	 return Optional.empty();
     }
     
     /**
@@ -69,12 +68,12 @@ public class ProductDao {
      * @param Product the product
      * @return the optional
      */
-    public Optional<Product> save(Product Product) {
+    public Optional<Product> save(Product product) {
         try {
             entityManager.getTransaction().begin();
-            entityManager.persist(Product);
+            entityManager.persist(product);
             entityManager.getTransaction().commit();
-            return Optional.of(Product);
+            return Optional.of(product);
         } catch (Exception e) {
             log.error(e.getMessage());
         }

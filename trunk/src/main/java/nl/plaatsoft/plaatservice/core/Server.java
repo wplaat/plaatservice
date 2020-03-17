@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
+import java.util.Optional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -98,14 +99,12 @@ public class Server {
             	log.debug("version={}", version);
             	log.debug("os={}", os);
             	
-            	Product product =  productRepository.findByName(name, version, os);
+            	Optional<Product> product = productRepository.findByName(name, version, os);
             	
-            	String content;
-            	if (product!=null) {
-            		content = product.getId().toString();
-            	} else {
-            		content = "null";
-            	}
+            	String content = "null";
+            	if (product.isPresent()) {
+            		content = product.get().getId().toString();
+            	} 
             	
             	response.setEntity(new StringEntity(content));
             	            	
