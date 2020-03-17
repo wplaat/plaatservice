@@ -19,7 +19,7 @@ public class Product {
     @GeneratedValue
     private Integer id;
     
-    /** The name. */
+	/** The name. */
     private String name;
     
     /** The version. */
@@ -100,5 +100,14 @@ public class Product {
 	 */
 	public void setOs(String os) {
 		this.os = os;
+	}
+	
+	/**
+	 * Gets the id.
+	 *
+	 * @return the id
+	 */
+	public Integer getId() {
+		return id;
 	}
 }

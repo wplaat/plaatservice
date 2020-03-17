@@ -46,13 +46,21 @@ public class ProductDao {
      * @param os the os
      * @return the list
      */
-    public List<Product> findByName(String name, String version, String os) {
+    public Product findByName(String name, String version, String os) {
     	
-    	return entityManager.createQuery("SELECT a FROM Product a WHERE a.name=:name AND a.version=:version AND a.os=:os", Product.class)
+    	Product product = null;
+    	
+    	try {
+    		product = entityManager.createQuery("SELECT a FROM Product a WHERE a.name=:name AND a.version=:version AND a.os=:os", Product.class)
                 .setParameter("name", name)
                 .setParameter("version", version)
                 .setParameter("os", os)
-                .getResultList();
+                .getSingleResult();
+    	} catch (Exception e) {
+    		// Do nothing
+    	}
+    	
+    	return product;
     }
     
     /**
@@ -71,5 +79,15 @@ public class ProductDao {
             log.error(e.getMessage());
         }
         return Optional.empty();
+    }
+    
+    /**
+     * Truncate.
+     *
+     * @param entityType the entity type
+     */
+    public void truncate (Class<Product> entityType) {
+    	String query = new StringBuilder("DELETE FROM ").append(entityType.getSimpleName()).append(" e").toString();
+    	entityManager.createNativeQuery(query);
     }
 }
