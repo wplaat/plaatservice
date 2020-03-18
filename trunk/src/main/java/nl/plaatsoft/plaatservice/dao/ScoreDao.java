@@ -1,5 +1,6 @@
 package nl.plaatsoft.plaatservice.dao;
 
+import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 import javax.persistence.EntityManager;
@@ -90,9 +91,15 @@ public class ScoreDao {
     }
     
     
+    /**
+     * Truncate.
+     */
     public void truncate() {
-       entityManager.getTransaction().begin();
-       entityManager.createNativeQuery("TRUNCATE TABLE score").executeUpdate();
-       entityManager.getTransaction().commit();       
-    }
+    	List<Score> scores = findAll();
+    	Iterator<Score> iter = scores.iterator();
+ 	    while (iter.hasNext()) {
+ 	    	Score score = iter.next();
+ 	    	entityManager.remove(score); 
+ 	    }
+     }
 }
