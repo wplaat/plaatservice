@@ -118,4 +118,10 @@ public class UserDao {
         }
         return Optional.empty();
     }
+    
+    public void truncate() {
+        entityManager.getTransaction().begin();
+        entityManager.createNativeQuery("TRUNCATE TABLE user").executeUpdate();
+        entityManager.getTransaction().commit();       
+     }
 }

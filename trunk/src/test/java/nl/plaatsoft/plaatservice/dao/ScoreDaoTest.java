@@ -28,7 +28,7 @@ public class ScoreDaoTest {
 	/** The Constant log. */
 	private static final Logger log = LogManager.getLogger( ScoreDaoTest.class);
 	
-	/** The score repository. */
+	/** The score repository. */	
 	private ScoreDao scoreDao;
 	
 	/** The user repository. */
@@ -59,7 +59,7 @@ public class ScoreDaoTest {
 	    EntityManager entityManager = entityManagerFactory.createEntityManager();	       
 	    scoreDao = new ScoreDao(entityManager);
 	    userDao = new UserDao(entityManager);
-	    productDao = new ProductDao(entityManager);
+	    productDao = new ProductDao(entityManager);	    
 	}
 		
 	/**
@@ -77,6 +77,10 @@ public class ScoreDaoTest {
 	               
 	    List<Score> scores =  scoreDao.findByUserScore(user, product);
 	    assertEquals(2, scores.size());   
+	    
+	    //scoreDao.truncate();
+	    //userDao.truncate();
+	    //productDao.truncate();
 	}
 	
 	/**
@@ -116,5 +120,9 @@ public class ScoreDaoTest {
 	    	log.debug(score);
 	    }
 	    assertEquals(10, scores.size());   
+	    
+	    //scoreDao.truncate();
+	    //userDao.truncate();
+	    //productDao.truncate();
 	}
 }

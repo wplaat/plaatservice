@@ -120,4 +120,10 @@ public class ProductDao {
         }
         return Optional.empty();
     }
+    
+    public void truncate() {
+        entityManager.getTransaction().begin();
+        entityManager.createNativeQuery("TRUNCATE TABLE product").executeUpdate();
+        entityManager.getTransaction().commit();       
+     }
 }

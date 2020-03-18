@@ -1,9 +1,10 @@
 package nl.plaatsoft.plaatservice.dao;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 /**
@@ -21,11 +22,11 @@ public class Score {
     private Integer id;
     
     /** The product. */
-    @OneToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private Product product;
         
     /** The user. */
-    @OneToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private User user;
     	
 	/** The dt. */

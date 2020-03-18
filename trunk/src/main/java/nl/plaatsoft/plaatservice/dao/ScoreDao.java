@@ -51,7 +51,7 @@ public class ScoreDao {
     	 return entityManager.createQuery("SELECT a FROM Score a WHERE a.user=:user AND a.product=:product ORDER BY a.score desc", Score.class)
                 .setParameter("user", user)
                 .setParameter("product", product)
-                .setMaxResults(10)
+                .setMaxResults(15)
                 .getResultList();
     }
     
@@ -67,7 +67,7 @@ public class ScoreDao {
     	
     	 return entityManager.createQuery("SELECT a FROM Score a WHERE a.product=:product ORDER BY a.score desc", Score.class)
                 .setParameter("product", product)
-                .setMaxResults(10)
+                .setMaxResults(15)
                 .getResultList();
     }
     
@@ -87,5 +87,12 @@ public class ScoreDao {
             log.error(e.getMessage());
         }
         return Optional.empty();
+    }
+    
+    
+    public void truncate() {
+       entityManager.getTransaction().begin();
+       entityManager.createNativeQuery("TRUNCATE TABLE score").executeUpdate();
+       entityManager.getTransaction().commit();       
     }
 }
