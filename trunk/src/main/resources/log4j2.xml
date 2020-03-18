@@ -19,6 +19,7 @@
     <Loggers>
     
     	<AsyncLogger name="nl.plaatsoft" level="INFO"/>
+    	<AsyncLogger name="org.hibernate" level="OFF"/>
   	
         <AsyncRoot level="ERROR">
         	<AppenderRef ref="RollingFile"/>

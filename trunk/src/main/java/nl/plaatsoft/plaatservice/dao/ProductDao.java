@@ -39,12 +39,27 @@ public class ProductDao {
     }
    
     /**
+     * Find by id.
+     *
+     * @param id the id
+     * @return the optional
+     */
+    public Optional<Product> findById(Integer id) {
+    	Product product = entityManager.find(Product.class, id);
+        if (product != null) {
+        	return Optional.of(product);
+        } else {
+        	return Optional.empty();
+        }
+    }
+        
+    /**
      * Find by name.
      *
      * @param name the name
      * @param version the version
      * @param os the os
-     * @return the list
+     * @return single
      */
     public Optional<Product> findByName(String name, String version, String os) {
     	
@@ -65,10 +80,33 @@ public class ProductDao {
     	 }    	
     }
     
+    
+    /**
+     * Find by name.
+     *
+     * @param name the name
+     * @return the single
+     */
+    public Optional<Product> findByName(String name) {
+    	
+    	 try {    		     	
+    		 Product product = entityManager.createQuery("SELECT a FROM Product a WHERE a.name=:name ORDER BY a.version desc", Product.class)
+                .setParameter("name", name)
+                .setMaxResults(1)
+                .getSingleResult();
+   		
+    		 return Optional.of(product);
+    		     		 
+    	 } catch (Exception e) {
+     		 return Optional.empty();
+    	 }    	
+    }
+    
+    
     /**
      * Save.
      *
-     * @param Product the product
+     * @param product the product
      * @return the optional
      */
     public Optional<Product> save(Product product) {

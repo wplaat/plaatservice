@@ -14,10 +14,10 @@ import javax.persistence.Table;
 @Table(name = "product")
 public class Product {
     
-    /** The id. */
+	/** The pid. */
     @Id
     @GeneratedValue
-    private Integer id;
+    private Integer pid;
     
 	/** The name. */
     private String name;
@@ -48,6 +48,17 @@ public class Product {
 		this.os = os;
 	}
 	
+	
+    /**
+     * To string.
+     *
+     * @return the string
+     */
+    @Override
+	public String toString() {
+		return "Product [pid=" + pid + ", name=" + name + ", version=" + version + ", os=" + os + "]";
+	}
+    
 	/**
 	 * Gets the name.
 	 *
@@ -103,11 +114,11 @@ public class Product {
 	}
 	
 	/**
-	 * Gets the id.
+	 * Gets the pid.
 	 *
-	 * @return the id
+	 * @return the pid
 	 */
-	public Integer getId() {
-		return id;
+	public Integer getPid() {
+		return pid;
 	}
 }

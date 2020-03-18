@@ -29,12 +29,9 @@ public class Config {
 	/** The port. */
 	private int port;
 	
-	/** The uri Base. */
-	private String versionUri;
-	
-	/** The uri Product. */
-	private String productUri;
-	
+	/** The uri . */
+	private String uri;
+		
 	/** The database driver. */
 	private String databaseDriver;
 	
@@ -46,6 +43,15 @@ public class Config {
 	
 	/** The database password. */
 	private String databasePassword;
+		
+	/** The hibernate dialect. */
+	private String hibernateDialect;
+	
+	/** The hibernate show sql. */
+	private String hibernateShowSql;
+	
+	/** The hibernate hbm 2 ddl auto. */
+	private String hibernateHbm2ddlAuto;
 	
 	
 	/**
@@ -71,13 +77,17 @@ public class Config {
  
 			ip = prop.getProperty("ip");			
 			port = Integer.valueOf(prop.getProperty("port"));
-			versionUri = prop.getProperty("versionUri");			
-			productUri = prop.getProperty("productUri");
-			databaseDriver = prop.getProperty("databaseDriver");
+			uri = prop.getProperty("uri");			
+			
 			databaseUrl = prop.getProperty("databaseUrl");
 			databaseUsername = prop.getProperty("databaseUsername");			
 			databasePassword = prop.getProperty("databasePassword");
+			databaseDriver = prop.getProperty("databaseDriver");
 			
+			hibernateDialect = prop.getProperty("hibernateDialect");
+			hibernateShowSql = prop.getProperty("hibernateShowSql");
+			hibernateHbm2ddlAuto = prop.getProperty("hibernateHbm2ddlAuto");
+						
 		} catch (Exception e) {
 			log.error(e.getMessage());
 		} 
@@ -93,23 +103,14 @@ public class Config {
 	}
 
 	/**
-	 * Gets the version uri.
+	 * Gets the uri.
 	 *
-	 * @return the version uri
+	 * @return the uri
 	 */
-	public String getVersionUri() {
-		return versionUri;
+	public String getUri() {
+		return uri;
 	}
-	
-	/**
-	 * Gets the product uri.
-	 *
-	 * @return the product uri
-	 */
-	public String getProductUri() {
-		return productUri;
-	}
-	
+		
 	/**
 	 * Gets the ip.
 	 *
@@ -154,5 +155,31 @@ public class Config {
 	public String getDatabaseDriver() {
 		return databaseDriver;
 	}
-	
+
+	/**
+	 * Gets the hibernate dialect.
+	 *
+	 * @return the hibernate dialect
+	 */
+	public String getHibernateDialect() {
+		return hibernateDialect;
+	}
+
+	/**
+	 * Gets the hibernate show sql.
+	 *
+	 * @return the hibernate show sql
+	 */
+	public String getHibernateShowSql() {
+		return hibernateShowSql;
+	}
+
+	/**
+	 * Gets the hibernate hbm 2 ddl auto.
+	 *
+	 * @return the hibernate hbm 2 ddl auto
+	 */
+	public String getHibernateHbm2ddlAuto() {
+		return hibernateHbm2ddlAuto;
+	}
 }

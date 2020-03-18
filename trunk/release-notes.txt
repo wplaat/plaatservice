@@ -1,0 +1,14 @@
+v0.1.0 @wplaat
+- Initial version based on PHP code
+- Based on mysql database
+
+v0.2.0 @wplaat
+- Added score API
+- Make it work with RedSquare, KnightQuest
+- Make it work with PlaatEnergy, PlaatProtect
+
+v0.3.0 @wplaat
+- Rewritten in Java
+- Added support for postgres database
+- Added unit tests
+- Source code is now stored in GitHub

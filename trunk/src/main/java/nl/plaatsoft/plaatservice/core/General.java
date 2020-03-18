@@ -5,6 +5,12 @@ package nl.plaatsoft.plaatservice.core;
  */
 public class General {
 
+	/**
+	 * Instantiates a new score.
+	 */
+	private General() {    	  
+	}
+		
 	/** The Constant APP_NAME. */
 	public static final String APP_NAME = "PlaatService";
 	
