@@ -1,5 +1,6 @@
 package nl.plaatsoft.plaatservice.dao;
 
+import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 import javax.persistence.EntityManager;
@@ -121,9 +122,15 @@ public class ProductDao {
         return Optional.empty();
     }
     
+    /**
+     * Truncate.
+     */
     public void truncate() {
-        entityManager.getTransaction().begin();
-        entityManager.createNativeQuery("TRUNCATE TABLE product").executeUpdate();
-        entityManager.getTransaction().commit();       
+    	List<Product> products = findAll();
+    	Iterator<Product> iter = products.iterator();
+ 	    while (iter.hasNext()) {
+ 	    	Product product = iter.next();
+ 	    	entityManager.remove(product); 
+ 	    }
      }
 }

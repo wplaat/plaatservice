@@ -49,6 +49,8 @@ public class ProductDaoTest {
         EntityManager entityManager = entityManagerFactory.createEntityManager();
        
 	    productDao = new ProductDao(entityManager);
+	    
+	    productDao.truncate();
 	}
 		
 	/**
@@ -56,7 +58,7 @@ public class ProductDaoTest {
 	 */
 	@Test
 	public void findById() {
-		        				
+		        						
 		productDao.save(new Product("PlaatService", "0.1.0", "Windows10"));
                
         Product product = productDao.findById(1).get();
@@ -70,10 +72,10 @@ public class ProductDaoTest {
 	 */
 	@Test
 	public void findAll() {
-		        
-        productDao.save(new Product("PlaatService", "0.1.0", "Windows10"));
+		        		
         productDao.save(new Product("PlaatService", "0.2.0", "Windows10"));
         productDao.save(new Product("PlaatService", "0.3.0", "Windows10"));
+        productDao.save(new Product("PlaatService", "0.4.0", "Windows10"));
                
         List<Product> products = productDao.findAll();
         
@@ -85,12 +87,12 @@ public class ProductDaoTest {
 	 */
 	@Test
 	public void findByName1() {
-		    	        	        
-	    productDao.save(new Product("PlaatService", "0.4.0", "Windows10"));
+		    	        	   		
 	    productDao.save(new Product("PlaatService", "0.5.0", "Windows10"));
+	    productDao.save(new Product("PlaatService", "0.6.0", "Windows10"));
 	               
-	    Optional<Product> product =  productDao.findByName("PlaatService", "0.4.0", "Windows10");
-	    assertEquals("0.4.0", product.get().getVersion());   
+	    Optional<Product> product =  productDao.findByName("PlaatService", "0.7.0", "Windows10");
+	    assertEquals("0.7.0", product.get().getVersion());   
 	}
 	
 	
@@ -100,16 +102,16 @@ public class ProductDaoTest {
 	 */
 	@Test
 	public void findByName2() {
-		    	        	        
-	    productDao.save(new Product("PlaatService", "0.4.0", "Windows10"));
-	    productDao.save(new Product("PlaatService", "0.5.0", "Windows10"));
-	    productDao.save(new Product("PlaatService", "0.3.0", "Windows10"));
-	    productDao.save(new Product("PlaatService", "0.1.0", "Windows10"));
-	    productDao.save(new Product("PlaatService", "0.6.0", "Windows10"));
-	    productDao.save(new Product("PlaatService", "0.2.0", "Windows10"));
+		    	 		
+	    productDao.save(new Product("PlaatService", "0.7.0", "Windows10"));
+	    productDao.save(new Product("PlaatService", "0.8.0", "Windows10"));
+	    productDao.save(new Product("PlaatService", "0.9.0", "Windows10"));
+	    productDao.save(new Product("PlaatService", "1.0.0", "Windows10"));
+	    productDao.save(new Product("PlaatService", "1.1.0", "Windows10"));
+	    productDao.save(new Product("PlaatService", "1.2.0", "Windows10"));
 	               
 	    Optional<Product> product =  productDao.findByName("PlaatService");
-	    assertEquals("0.6.0", product.get().getVersion());   
+	    assertEquals("1.2.0", product.get().getVersion());   
 	}
 	
 	
@@ -118,14 +120,14 @@ public class ProductDaoTest {
 	 */
 	@Test
 	public void findByNameNotFound () {
-		    	        	        
-	    productDao.save(new Product("PlaatService", "0.4.0", "Windows10"));
-	    productDao.save(new Product("PlaatService", "0.5.0", "Windows10"));
+		    	        	        		
+	    productDao.save(new Product("PlaatService", "1.3.0", "Windows10"));
+	    productDao.save(new Product("PlaatService", "1.4.0", "Windows10"));
 	               
 	    // New entry is created
-	    Optional<Product> product =  productDao.findByName("PlaatService", "0.6.0", "Windows10");
+	    Optional<Product> product =  productDao.findByName("PlaatService", "1.4.0", "Windows10");
 	    assertTrue(product.isPresent()==true);   
-	    assertEquals("3", product.get().getPid().toString());  
+	    assertEquals("1.4.0", product.get().getVersion().toString());  
 	}
 	
 	/**
@@ -134,7 +136,7 @@ public class ProductDaoTest {
 	@Test
 	public void findByNameNull() {
 			        	        	               
-        Optional<Product> product =  productDao.findByName("PlaatService", "0.6.0", "Windows10");
-        assertEquals("1", product.get().getPid().toString());   
+        Optional<Product> product =  productDao.findByName("PlaatService", "1.5.0", "Windows10");
+        assertEquals("1.5.0", product.get().getVersion().toString());   
 	}
 }

@@ -49,6 +49,8 @@ public class UserDaoTest {
 		
 	    EntityManager entityManager = entityManagerFactory.createEntityManager();	       
 	    userDao = new UserDao(entityManager);
+	    
+	    userDao.truncate();
 	}
 		
 	

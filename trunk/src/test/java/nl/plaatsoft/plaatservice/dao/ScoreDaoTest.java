@@ -60,6 +60,10 @@ public class ScoreDaoTest {
 	    scoreDao = new ScoreDao(entityManager);
 	    userDao = new UserDao(entityManager);
 	    productDao = new ProductDao(entityManager);	    
+	    	    
+	    scoreDao.truncate();
+	    productDao.truncate();
+	    userDao.truncate();
 	}
 		
 	/**
@@ -77,10 +81,6 @@ public class ScoreDaoTest {
 	               
 	    List<Score> scores =  scoreDao.findByUserScore(user, product);
 	    assertEquals(2, scores.size());   
-	    
-	    //scoreDao.truncate();
-	    //userDao.truncate();
-	    //productDao.truncate();
 	}
 	
 	/**
@@ -111,6 +111,10 @@ public class ScoreDaoTest {
 		scoreDao.save(new Score(user3, product2, "2", 13, 11));
 		scoreDao.save(new Score(user3, product2, "2", 14, 12));
 		scoreDao.save(new Score(user3, product2, "2", 15, 13));
+		scoreDao.save(new Score(user3, product2, "2", 16, 13));
+		scoreDao.save(new Score(user3, product2, "2", 17, 13));
+		scoreDao.save(new Score(user3, product2, "2", 18, 13));
+		
 	               	            	              
 	    List<Score> scores =  scoreDao.findByTopScore(product2);
 	    
@@ -119,10 +123,6 @@ public class ScoreDaoTest {
 	    	Score score = (Score) iter.next();
 	    	log.debug(score);
 	    }
-	    assertEquals(10, scores.size());   
-	    
-	    //scoreDao.truncate();
-	    //userDao.truncate();
-	    //productDao.truncate();
+	    assertEquals(15, scores.size());   
 	}
 }
