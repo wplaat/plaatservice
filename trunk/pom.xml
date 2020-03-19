@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>nl.plaatsoft</groupId>
 	<artifactId>plaatservice</artifactId>
-	<version>0.4.0</version>
+	<version>0.4.1-SNAPSHOP</version>
 	
 	<dependencies>
 
