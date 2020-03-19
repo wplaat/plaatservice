@@ -23,7 +23,7 @@
   	
         <AsyncRoot level="ERROR">
         	<AppenderRef ref="RollingFile"/>
-            <AppenderRef ref="Console"/>
+            <!--  AppenderRef ref="Console"/-->
         </AsyncRoot>
     </Loggers>
 </Configuration>

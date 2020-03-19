@@ -37,19 +37,7 @@
     		<artifactId>httpclient</artifactId>
     		<version>4.5.1</version>
 		</dependency>
-		
-		<dependency>
-    		<groupId>org.apache.httpcomponents</groupId>
-    		<artifactId>httpcore</artifactId>
-    		<version>4.4.13</version>
-		</dependency>
-		
-		<dependency>
-   			<groupId>com.fasterxml.jackson.core</groupId>
-   			<artifactId>jackson-core</artifactId>
-   			<version>2.10.3</version>
-		</dependency>
-		
+				
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-databind</artifactId>
@@ -79,15 +67,7 @@
 
     <plugins>
       <plugin>
-        <artifactId>maven-assembly-plugin</artifactId>
-        <executions>
-          <execution>
-            <phase>package</phase>
-            <goals>
-              <goal>single</goal>
-            </goals>
-          </execution>
-        </executions>
+        <artifactId>maven-assembly-plugin</artifactId>       
         <configuration>
         	<archive>
 				<manifest>
@@ -98,6 +78,15 @@
             <descriptorRef>jar-with-dependencies</descriptorRef>
           </descriptorRefs>
         </configuration>
+         <executions>
+          <execution>
+            <id>make-assembly</id>
+            <phase>package</phase>
+            <goals>
+              <goal>single</goal>
+            </goals>
+          </execution>
+        </executions>
       </plugin>
     </plugins>
   </build>

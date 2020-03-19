@@ -8,6 +8,9 @@ v0.2.0 @wplaat
 - Make it work with PlaatEnergy, PlaatProtect
 
 v0.3.0 @wplaat
+- Final php version
+
+v0.4.0 @wplaat
 - Rewritten in Java
 - Added support for postgres database
 - Added unit tests
