@@ -9,7 +9,7 @@
     <Loggers>
     
     	<AsyncLogger name="nl.plaatsoft" level="DEBUG"/>
-    	<AsyncLogger name="org.hibernate" level="INFO"/>
+    	<AsyncLogger name="org.hibernate" level="ERROR"/>
   	
         <AsyncRoot level="ERROR">
             <AppenderRef ref="Console"/>
