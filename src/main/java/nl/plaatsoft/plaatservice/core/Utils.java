@@ -132,14 +132,12 @@ public class Utils {
 	 */
 	public static String getJsonProducts(SortedMap<String, String> products) {
 		
-		JSONArray array = new JSONArray();
+		JSONObject obj = new JSONObject();
 		
 		for(Map.Entry<String, String> entry : products.entrySet()) {
-						
-			 JSONObject obj = new JSONObject();
+
 			 obj.put(entry.getKey(), entry.getValue());
-			 array.put(obj);
 		}
-		return array.toString();
+		return obj.toString();
 	}
 }
