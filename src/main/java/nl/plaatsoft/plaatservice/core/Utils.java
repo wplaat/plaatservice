@@ -2,7 +2,9 @@ package nl.plaatsoft.plaatservice.core;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.SortedMap;
 
 import org.apache.http.NameValuePair;
@@ -10,9 +12,10 @@ import org.apache.http.client.utils.URLEncodedUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
+import nl.plaatsoft.plaatservice.dao.Product;
 import nl.plaatsoft.plaatservice.dao.Score;
 import nl.plaatsoft.plaatservice.dao.User;
 
@@ -54,76 +57,89 @@ public class Utils {
 			
 		return value;		
 	}
-			
+					
 	/**
-	 * Gets the json.
+	 * Gets the json user.
 	 *
-	 * @param items the items
-	 * @return the json
+	 * @param user the user
+	 * @return the json user
 	 */
-	public static String getJson(SortedMap<String, String> items) {
-		String json = null;
-    	ObjectMapper mapper = new ObjectMapper();
-
-    	try {
-    		json = mapper.writeValueAsString(items);
-    	} catch (JsonProcessingException e) {
-    		log.error(e.getMessage());
-    	}   
-    	return json;
-	}
+	public static String getJsonUser(User user) {
 		
-	/**
-	 * Gets the json.
-	 *
-	 * @param items the items
-	 * @return the json
-	 */
-	public static String getJsonLong(SortedMap<String, Long> items) {
-		String json = null;
-    	ObjectMapper mapper = new ObjectMapper();
-
-    	try {
-    		json = mapper.writeValueAsString(items);
-    	} catch (JsonProcessingException e) {
-    		log.error(e.getMessage());
-    	}   
-    	return json;
+		JSONObject obj = new JSONObject();
+		
+	   	obj.put("uid", user.getUid());
+	   	obj.put("country", user.getCountry());
+	   	obj.put("nickname",user.getNickname());
+	   	
+	   	return obj.toString();
 	}
 	
 	/**
-	 * Gets the json.
+	 * Gets the json product.
 	 *
-	 * @param items the items
-	 * @return the json
+	 * @param product the product
+	 * @return the json product
 	 */
-	public static String getJson(List<Score> scores) {
-		String json = null;
-    	ObjectMapper mapper = new ObjectMapper();
-
-    	try {
-    		json = mapper.writeValueAsString(scores);
-    	} catch (JsonProcessingException e) {
-    		log.error(e.getMessage());
-    	}   
-    	return json;
+	public static String getJsonProduct(Product product) {
+		
+		JSONObject obj = new JSONObject();
+		
+	   	obj.put("pid", product.getPid());
+	   	obj.put("name", product.getName());
+	   	obj.put("version", product.getVersion());
+	   	obj.put("os",product.getOs());
+	   	
+	   	return obj.toString();
 	}
 	
 	/**
-	 * Gets the json.
+	 * Gets the json scores.
 	 *
-	 * @param items the items
-	 * @return the json
+	 * @param scores the scores
+	 * @return the json scores
 	 */
-	public static String getJson(User user) {
-		String json = null;
-    	ObjectMapper mapper = new ObjectMapper();
-
-    	try {
-    		json = mapper.writeValueAsString(user);
-    	} catch (JsonProcessingException e) {
-    		log.error(e.getMessage());
-    	}   
-    	return json;
+	public static String getJsonScores(List<Score> scores) {
+				
+		JSONArray array = new JSONArray();
+		
+		Iterator<Score> iter = scores.iterator();
+		while (iter.hasNext()) {
+		    			 
+		  	Score score = iter.next();
+		    	
+		  	JSONObject obj2 = new JSONObject();
+		   	obj2.put("nickname", score.getUser().getNickname());
+		   	obj2.put("country", score.getUser().getCountry());
+		   	
+		   	JSONObject obj = new JSONObject();
+		   	obj.put("sid", score.getSid());
+		   	obj.put("dt", score.getDt());
+		   	obj.put("level", score.getLevel());
+		   	obj.put("score", score.getScore());		   			   
+		   	obj.put("user", obj2);
+		   	
+		   	array.put(obj);
+		}		
+		return array.toString();
+	}
+	
+	/**
+	 * Gets the json scores.
+	 *
+	 * @param products the products
+	 * @return the json scores
+	 */
+	public static String getJsonProducts(SortedMap<String, String> products) {
+		
+		JSONArray array = new JSONArray();
+		
+		for(Map.Entry<String, String> entry : products.entrySet()) {
+						
+			 JSONObject obj = new JSONObject();
+			 obj.put(entry.getKey(), entry.getValue());
+			 array.put(obj);
+		}
+		return array.toString();
 	}
 }

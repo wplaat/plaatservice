@@ -18,4 +18,5 @@ v0.4.0 @wplaat
 
 v0.5.0 @wplaat
 - Improve data model (sequence are now unique per table)
+- Switch of json library. Make code better readable
 - Add missing products

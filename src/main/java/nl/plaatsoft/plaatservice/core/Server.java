@@ -74,7 +74,7 @@ public class Server {
 			
 			if (user.isPresent() && (product.isPresent())) {
 				List <Score> scores = scoreDao.findByUserScore(user.get(), product.get());
-				return Utils.getJson(scores);
+				return Utils.getJsonScores(scores);
 			}
 		} 
 		return "{}";		
@@ -97,7 +97,7 @@ public class Server {
 			if (product.isPresent()) {
 			
 				List <Score> scores = scoreDao.findByTopScore(product.get());		     
-				return Utils.getJson(scores);
+				return Utils.getJsonScores(scores);
 			}
 		} 
 		return "{}";		
@@ -156,7 +156,7 @@ public class Server {
     		if (user.isPresent()) {
     			user.get().setNickname(nickname);
     			userDao.save(user.get());
-    			return Utils.getJson(user.get());        		
+    			return Utils.getJsonUser(user.get());        		
         	} 
     	}
     	return "{}";
@@ -179,13 +179,12 @@ public class Server {
     	if ((ip!=null) && (username!=null) && (nickname!=null) && (country!=null) && (city!=null)) {
     		Optional<User> user = userDao.findByName(ip, username, nickname, country, city);
     		if (user.isPresent()) {
-    			return Utils.getJson(user.get());
+    			return Utils.getJsonUser(user.get());
     		} 
     	} 
     	return "{}";
 	}
-		
-	
+			
 	private String getVersion(String uri) {
 		
     	String name = Utils.getParameter(uri, "product");
@@ -194,10 +193,8 @@ public class Server {
     		Optional<Product> product = productDao.findByName(name);
     	    		
     		if (product.isPresent()) {
-    			
-    			TreeMap<String, String> items = new TreeMap<String, String>();
-    			items.put("version", product.get().getVersion());
-    			return Utils.getJson(items);
+    		    			
+    			return Utils.getJsonProduct(product.get());
     		}    		
     	}
     	return "{}";
@@ -219,9 +216,7 @@ public class Server {
     		Optional<Product> product = productDao.findByName(name, version, os);
     	                	         	   		    		
     		if (product.isPresent()) {
-    			TreeMap<String, Long> items = new TreeMap<String, Long>();
-    			items.put("pid", product.get().getPid());
-    			return Utils.getJsonLong(items);
+    			return Utils.getJsonProduct(product.get());
     		}       		
     	} 
     	return "{}";   
@@ -273,7 +268,7 @@ public class Server {
 		items.put("Drupal-EventNotification", "2.2");
 		items.put("Drupal-ChurchAdmin", "1.1");
 				
-		return Utils.getJson(items);  		
+		return Utils.getJsonProducts(items);  		
 	 }
 	
 	/**
