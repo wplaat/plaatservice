@@ -64,19 +64,20 @@ public class Server {
 	 */
 	private String getLocalScore(String uri) {
 		
-		Integer uid = Integer.valueOf(Utils.getParameter(uri, "uid"));
-		Integer pid = Integer.valueOf(Utils.getParameter(uri, "pid"));
+		long uid = Long.parseLong(Utils.getParameter(uri, "uid"));
+		long pid = Long.parseLong(Utils.getParameter(uri, "pid"));
 						
 		if ((pid>0) && (uid>0)) {
 			
-			User user = userDao.findById(uid).get();
-			Product product = productDao.findById(pid).get();
+			Optional<User> user = userDao.findById(uid);
+			Optional<Product> product = productDao.findById(pid);
 			
-			List <Score> scores = scoreDao.findByUserScore(user, product);
-			return Utils.getJson(scores); 
-		} else {
-			return "{}";
-		}
+			if (user.isPresent() && (product.isPresent())) {
+				List <Score> scores = scoreDao.findByUserScore(user.get(), product.get());
+				return Utils.getJson(scores);
+			}
+		} 
+		return "{}";		
 	}
 	
 	/**
@@ -87,17 +88,19 @@ public class Server {
 	 */
 	private String getGlobalScore(String uri) {
 		
-		Integer pid = Integer.valueOf(Utils.getParameter(uri, "pid"));
+		long pid = Long.parseLong(Utils.getParameter(uri, "pid"));
 		
 		if (pid>0) {
 			
-			Product product = productDao.findById(pid).get();
+			Optional<Product> product = productDao.findById(pid);
 			
-			List <Score> scores = scoreDao.findByTopScore(product);		     
-			return Utils.getJson(scores);
-		} else {
-			return "{}";
-		}
+			if (product.isPresent()) {
+			
+				List <Score> scores = scoreDao.findByTopScore(product.get());		     
+				return Utils.getJson(scores);
+			}
+		} 
+		return "{}";		
 	}
 	
 	/**
@@ -108,23 +111,29 @@ public class Server {
 	 */
 	private String setScore(String uri) {
 				
-		Integer uid = Integer.valueOf(Utils.getParameter(uri, "uid"));
-		Integer pid = Integer.valueOf(Utils.getParameter(uri, "pid"));
-		
-		User user = userDao.findById(uid).get();
-		Product product = productDao.findById(pid).get();		
-		
-		Score score = new Score();
-		score.setUser(user);
-		score.setProduct(product);
-		score.setDt(Utils.getParameter(uri, "dt"));
-		score.setLevel(Integer.valueOf(Utils.getParameter(uri, "level")));		
-		score.setScore(Integer.valueOf(Utils.getParameter(uri, "score")));
-						
-		if ((score.getDt()!=null) && (user!=null) && (product!=null)) {			
-			scoreDao.save(score);
-		}
+		long uid = Long.parseLong(Utils.getParameter(uri, "uid"));
+		long pid = Long.parseLong(Utils.getParameter(uri, "pid"));
+		long dt = Long.parseLong(Utils.getParameter(uri, "dt"));
+		long level = Long.parseLong(Utils.getParameter(uri, "level"));
+		long points = Long.parseLong(Utils.getParameter(uri, "score"));
 				
+		if ((pid>0) && (uid>0) && (dt>0)) {
+			
+			Optional<User> user = userDao.findById(uid);
+			Optional<Product> product = productDao.findById(pid);
+			
+			if (user.isPresent() && (product.isPresent())) {
+				
+				Score score = new Score();
+				score.setUser(user.get());
+				score.setProduct(product.get());
+				score.setDt(dt);
+				score.setLevel(level);		
+				score.setScore(points);
+	
+				scoreDao.save(score);
+			}
+		}				
 		return "{}";
 	}
 	
@@ -141,6 +150,7 @@ public class Server {
     	String nickname = Utils.getParameter(uri, "nickname");
     	
     	if ((ip!=null) && (username!=null) && (nickname!=null)) {
+    		
     		Optional<User> user = userDao.findByName(ip, username);
     	
     		if (user.isPresent()) {
@@ -182,12 +192,13 @@ public class Server {
     	
     	if ((name!=null)) {
     		Optional<Product> product = productDao.findByName(name);
-    	
-    		TreeMap<String, String> items = new TreeMap<String, String>();
+    	    		
     		if (product.isPresent()) {
-    			items.put("version", product.get().getVersion());    			
-    		}
-    		return Utils.getJson(items);
+    			
+    			TreeMap<String, String> items = new TreeMap<String, String>();
+    			items.put("version", product.get().getVersion());
+    			return Utils.getJson(items);
+    		}    		
     	}
     	return "{}";
 	}
@@ -206,15 +217,14 @@ public class Server {
     	
     	if ((name!=null) && (version!=null) && (os!=null)) {
     		Optional<Product> product = productDao.findByName(name, version, os);
-    	                	         	   		
-    		TreeMap<String, Long> items = new TreeMap<String, Long>();
-    		if (product.isPresent()) {    	
+    	                	         	   		    		
+    		if (product.isPresent()) {
+    			TreeMap<String, Long> items = new TreeMap<String, Long>();
     			items.put("pid", product.get().getPid());
-    		}
-    		return Utils.getJsonLong(items);       		
-    	} else {
-    		return "{}";
-    	}	   
+    			return Utils.getJsonLong(items);
+    		}       		
+    	} 
+    	return "{}";   
 	}
 		
 	/**

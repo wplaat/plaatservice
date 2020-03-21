@@ -31,10 +31,13 @@ public class Score {
     private User user;
     	
 	/** The dt. */
-	private String dt;
+	private long dt;
 	
 	/** The score. */
-	private Integer score;
+	private long score;
+	
+	/** The level. */
+	private long level;	
 	
 	/**
 	 * Instantiates a new score.
@@ -51,7 +54,7 @@ public class Score {
 	 * @param score the score
 	 * @param level the level
 	 */
-	public Score(User user, Product product, String dt, Integer score, Integer level) {
+	public Score(User user, Product product, long dt, long score, long level) {
 		super();
 		this.user = user;
 		this.product = product;		
@@ -94,7 +97,7 @@ public class Score {
 	 *
 	 * @return the dt
 	 */
-	public String getDt() {
+	public long getDt() {
 		return dt;
 	}
 	
@@ -139,7 +142,7 @@ public class Score {
 	 *
 	 * @param dt the new dt
 	 */
-	public void setDt(String dt) {
+	public void setDt(long dt) {
 		this.dt = dt;
 	}
 	
@@ -148,7 +151,7 @@ public class Score {
 	 *
 	 * @return the score
 	 */
-	public Integer getScore() {
+	public long getScore() {
 		return score;
 	}
 	
@@ -157,7 +160,7 @@ public class Score {
 	 *
 	 * @param score the new score
 	 */
-	public void setScore(Integer score) {
+	public void setScore(long score) {
 		this.score = score;
 	}
 	
@@ -166,7 +169,7 @@ public class Score {
 	 *
 	 * @return the level
 	 */
-	public Integer getLevel() {
+	public long getLevel() {
 		return level;
 	}
 	
@@ -175,10 +178,7 @@ public class Score {
 	 *
 	 * @param level the new level
 	 */
-	public void setLevel(Integer level) {
+	public void setLevel(long level) {
 		this.level = level;
 	}
-	
-	/** The level. */
-	private Integer level;	
 }

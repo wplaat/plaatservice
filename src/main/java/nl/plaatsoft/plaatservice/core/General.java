@@ -15,5 +15,5 @@ public class General {
 	public static final String APP_NAME = "PlaatService";
 	
 	/** The Constant APP_VERSION. */
-	public static final String APP_VERSION = "0.4.0";
+	public static final String APP_VERSION = "0.5.0";
 }

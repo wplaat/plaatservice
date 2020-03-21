@@ -31,8 +31,8 @@ public class ScoreDaoTest extends GeneralDaoTest  {
 		
 		Product product1 = productDao.save(new Product("PlaatService", "0.1.0", "Windows10")).get();
 						
-		Score score1 = scoreDao.save(new Score(user1, product1, "1", 10, 1)).get();		
-		Score score2 = scoreDao.save(new Score(user1, product1, "2", 10, 1)).get();
+		Score score1 = scoreDao.save(new Score(user1, product1, 1, 10, 1)).get();		
+		Score score2 = scoreDao.save(new Score(user1, product1, 2, 10, 1)).get();
 	               
 		// Check Generated id's
 	    assertEquals(1, user1.getUid());
@@ -58,24 +58,24 @@ public class ScoreDaoTest extends GeneralDaoTest  {
 		Product product1 = productDao.save(new Product("PlaatService", "0.2.0", "Windows10")).get();
 		Product product2 = productDao.save(new Product("PlaatService", "0.3.0", "Windows10")).get();
 		   		
-		scoreDao.save(new Score(user1, product1, "1", 1, 1));
-		scoreDao.save(new Score(user1, product1, "2", 2, 1));
-		scoreDao.save(new Score(user1, product1, "2", 3, 1));
-		scoreDao.save(new Score(user2, product2, "2", 4, 2));
-		scoreDao.save(new Score(user2, product2, "2", 5, 3));
-		scoreDao.save(new Score(user2, product2, "2", 6, 4));
-		scoreDao.save(new Score(user3, product2, "2", 7, 5));
-		scoreDao.save(new Score(user3, product2, "2", 8, 6));
-		scoreDao.save(new Score(user3, product2, "2", 9, 7));
-		scoreDao.save(new Score(user3, product2, "2", 10, 8));
-		scoreDao.save(new Score(user3, product2, "2", 11, 9));
-		scoreDao.save(new Score(user3, product2, "2", 12, 10));
-		scoreDao.save(new Score(user3, product2, "2", 13, 11));
-		scoreDao.save(new Score(user3, product2, "2", 14, 12));
-		scoreDao.save(new Score(user3, product2, "2", 15, 13));
-		scoreDao.save(new Score(user3, product2, "2", 16, 13));
-		scoreDao.save(new Score(user3, product2, "2", 17, 13));
-		scoreDao.save(new Score(user3, product2, "2", 18, 13));
+		scoreDao.save(new Score(user1, product1, 1, 1, 1));
+		scoreDao.save(new Score(user1, product1, 2, 2, 1));
+		scoreDao.save(new Score(user1, product1, 2, 3, 1));
+		scoreDao.save(new Score(user2, product2, 2, 4, 2));
+		scoreDao.save(new Score(user2, product2, 2, 5, 3));
+		scoreDao.save(new Score(user2, product2, 2, 6, 4));
+		scoreDao.save(new Score(user3, product2, 2, 7, 5));
+		scoreDao.save(new Score(user3, product2, 2, 8, 6));
+		scoreDao.save(new Score(user3, product2, 2, 9, 7));
+		scoreDao.save(new Score(user3, product2, 2, 10, 8));
+		scoreDao.save(new Score(user3, product2, 2, 11, 9));
+		scoreDao.save(new Score(user3, product2, 2, 12, 10));
+		scoreDao.save(new Score(user3, product2, 2, 13, 11));
+		scoreDao.save(new Score(user3, product2, 2, 14, 12));
+		scoreDao.save(new Score(user3, product2, 2, 15, 13));
+		scoreDao.save(new Score(user3, product2, 2, 16, 13));
+		scoreDao.save(new Score(user3, product2, 2, 17, 13));
+		scoreDao.save(new Score(user3, product2, 2, 18, 13));
 		
 	               	            	              
 	    List<Score> scores =  scoreDao.findByTopScore(product2);
