@@ -236,11 +236,11 @@ public class Server {
 					
 		TreeMap<String, String> items = new TreeMap<String, String>();
 		
-		items.put("PlaatEnergy", "1.6");
+		items.put("PlaatEnergy", "1.7");
 		items.put("PlaatScrum", "1.3");
-		items.put("PlaatProtect", "0.6");
+		items.put("PlaatProtect", "0.6.0");
 		items.put("PlaatSign", "1.1");		
-		items.put("PlaatDishes", "0.1");
+		items.put("PlaatDishes", "0.6.0");
 		items.put("PlaatSpace", "0.1.0");
 		items.put("PlaatCyber", "0.1.0");
 		items.put(General.APP_NAME, General.APP_VERSION);
