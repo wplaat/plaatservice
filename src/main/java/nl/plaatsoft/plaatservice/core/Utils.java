@@ -3,6 +3,7 @@ package nl.plaatsoft.plaatservice.core;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
+import java.util.SortedMap;
 import java.util.TreeMap;
 
 import org.apache.http.NameValuePair;
@@ -61,7 +62,7 @@ public class Utils {
 	 * @param items the items
 	 * @return the json
 	 */
-	public static String getJson(TreeMap<String, String> items) {
+	public static String getJson(SortedMap<String, String> items) {
 		String json = null;
     	ObjectMapper mapper = new ObjectMapper();
 
@@ -73,6 +74,24 @@ public class Utils {
     	return json;
 	}
 		
+	/**
+	 * Gets the json.
+	 *
+	 * @param items the items
+	 * @return the json
+	 */
+	public static String getJsonLong(SortedMap<String, Long> items) {
+		String json = null;
+    	ObjectMapper mapper = new ObjectMapper();
+
+    	try {
+    		json = mapper.writeValueAsString(items);
+    	} catch (JsonProcessingException e) {
+    		log.error(e.getMessage());
+    	}   
+    	return json;
+	}
+	
 	/**
 	 * Gets the json.
 	 *

@@ -45,7 +45,7 @@ public class ProductDao {
      * @param id the id
      * @return the optional
      */
-    public Optional<Product> findById(Integer id) {
+    public Optional<Product> findById(long id) {
     	Product product = entityManager.find(Product.class, id);
         if (product != null) {
         	return Optional.of(product);

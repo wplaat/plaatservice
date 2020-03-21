@@ -2,6 +2,7 @@ package nl.plaatsoft.plaatservice.dao;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -16,8 +17,8 @@ public class User {
     
 	/** The uid. */
     @Id
-    @GeneratedValue
-    private Integer uid;
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "uid")
+    private long uid;
     
     /** The ip. */
     private String ip; 
@@ -74,7 +75,7 @@ public class User {
 	 *
 	 * @return the uid
 	 */
-	public Integer getUid() {
+	public long getUid() {
 		return uid;
 	}
 

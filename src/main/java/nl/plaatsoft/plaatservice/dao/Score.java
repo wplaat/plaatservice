@@ -3,6 +3,7 @@ package nl.plaatsoft.plaatservice.dao;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
@@ -16,10 +17,10 @@ import javax.persistence.Table;
 @Table(name = "score")
 public class Score {
 
-	/** The id. */
+	/** The sid. */
     @Id
-    @GeneratedValue
-    private Integer id;
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sid")
+    private long sid;
     
     /** The product. */
     @ManyToOne(fetch = FetchType.EAGER)
@@ -67,25 +68,25 @@ public class Score {
 	 */
 	@Override
 	public String toString() {
-		return "Score [id=" + id + ", user=" + user+ ", product=" + product + ", dt=" + dt + ", score=" + score + ", level="+ level + "]";
+		return "Score [sid=" + sid + ", user=" + user+ ", product=" + product + ", dt=" + dt + ", score=" + score + ", level="+ level + "]";
 	}
 	
 	/**
-	 * Gets the id.
+	 * Gets the sid.
 	 *
-	 * @return the id
+	 * @return the sid
 	 */
-	public Integer getId() {
-		return id;
+	public long getSid() {
+		return sid;
 	}
 	
 	/**
-	 * Sets the id.
+	 * Sets the sid.
 	 *
-	 * @param id the new id
+	 * @param id the new sid
 	 */
-	public void setId(Integer id) {
-		this.id = id;
+	public void setId(Integer sid) {
+		this.sid = sid;
 	}
 		
 	/**

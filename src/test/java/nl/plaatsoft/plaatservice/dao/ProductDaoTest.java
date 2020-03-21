@@ -3,56 +3,18 @@ package nl.plaatsoft.plaatservice.dao;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
-
-import org.junit.Before;
 import org.junit.Test;
-
-import nl.plaatsoft.plaatservice.core.Config;
 
 /**
  * The Class ProductDaoTest.
  * 
  * @author wplaat
  */
-public class ProductDaoTest {
-
-	/** The product repository. */
-	private ProductDao productDao;
+public class ProductDaoTest extends GeneralDaoTest {
 	
-	/**
-	 * Setup.
-	 */
-	@Before
-	public void setup() { 		
-		
-		Config config = new Config();
-		
-		Map<String, String> properties = new HashMap<String, String>();
-		properties.put("javax.persistence.jdbc.driver", config.getDatabaseDriver());
-		properties.put("javax.persistence.jdbc.url", config.getDatabaseUrl());
-		properties.put("javax.persistence.jdbc.user", config.getDatabaseUsername());
-		properties.put("javax.persistence.jdbc.password", config.getDatabasePassword());
-				
-		properties.put("hibernate.dialect", config.getHibernateDialect());
-		properties.put("hibernate.hbm2ddl.auto", config.getHibernateHbm2ddlAuto());
-		properties.put("hibernate.show_sql", config.getHibernateShowSql());
-						
-		EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("PlaatService", properties);
-        EntityManager entityManager = entityManagerFactory.createEntityManager();
-       
-	    productDao = new ProductDao(entityManager);
-	    
-	    productDao.truncate();
-	}
-		
 	/**
 	 * Find By Id.
 	 */
@@ -63,7 +25,7 @@ public class ProductDaoTest {
                
         Product product = productDao.findById(1).get();
         
-        assertEquals("1", product.getPid().toString());        
+        assertEquals(1, product.getPid());        
 	}
 	
 	

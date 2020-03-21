@@ -36,7 +36,7 @@ public class UserDao {
      * @param id the id
      * @return the optional
      */
-    public Optional<User> findById(Integer id) {
+    public Optional<User> findById(long id) {
     	User user = entityManager.find(User.class, id);
         if (user != null) {
         	return Optional.of(user);

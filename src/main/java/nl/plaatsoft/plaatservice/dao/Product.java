@@ -2,6 +2,7 @@ package nl.plaatsoft.plaatservice.dao;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -16,8 +17,8 @@ public class Product {
     
 	/** The pid. */
     @Id
-    @GeneratedValue
-    private Integer pid;
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "pid")
+    private long pid;
     
 	/** The name. */
     private String name;
@@ -118,7 +119,7 @@ public class Product {
 	 *
 	 * @return the pid
 	 */
-	public Integer getPid() {
+	public long getPid() {
 		return pid;
 	}
 }

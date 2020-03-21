@@ -20,7 +20,7 @@ import org.apache.http.impl.bootstrap.HttpServer;
 import org.apache.http.impl.bootstrap.ServerBootstrap;
 import org.apache.http.protocol.HttpContext;
 import org.apache.http.protocol.HttpRequestHandler;
-
+import org.apache.http.util.EntityUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -207,11 +207,11 @@ public class Server {
     	if ((name!=null) && (version!=null) && (os!=null)) {
     		Optional<Product> product = productDao.findByName(name, version, os);
     	                	         	   		
-    		TreeMap<String, String> items = new TreeMap<String, String>();
+    		TreeMap<String, Long> items = new TreeMap<String, Long>();
     		if (product.isPresent()) {    	
-    			items.put("pid", product.get().getPid().toString());
+    			items.put("pid", product.get().getPid());
     		}
-    		return Utils.getJson(items);       		
+    		return Utils.getJsonLong(items);       		
     	} else {
     		return "{}";
     	}	   
@@ -231,10 +231,12 @@ public class Server {
 		items.put("PlaatProtect", "0.6");
 		items.put("PlaatSign", "1.1");		
 		items.put("PlaatDishes", "0.1");
+		items.put("PlaatSpace", "0.1.0");
+		items.put("PlaatCyber", "0.1.0");
 		items.put(General.APP_NAME, General.APP_VERSION);
 		
 		items.put("Java-RedSquare", "0.4.0");
-		items.put("Java-KnightsQuest", "0.4");
+		items.put("Java-KnightsQuest", "0.5.0");
 		
 		items.put("Windows-ChatCostCalc", "0.50");
 		items.put("Windows-WarQuest", "1.6");
@@ -276,7 +278,8 @@ public class Server {
             	
             	String uri = request.getRequestLine().getUri();
             	
-            	log.info("RX: {}", request);
+            	log.info("-------------------------------------------"); 
+            	log.info("RX: {}", request);            	
             	
             	String action = Utils.getParameter(uri, "action");
 
@@ -327,6 +330,7 @@ public class Server {
                 }
                 	                  	                   
                 log.info("TX: {}", response);
+                log.debug(EntityUtils.toString(response.getEntity(), "UTF-8"));
             }};
 	}
 		

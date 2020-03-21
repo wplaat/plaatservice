@@ -15,3 +15,7 @@ v0.4.0 @wplaat
 - Added support for postgres database
 - Added unit tests
 - Source code is now stored in GitHub
+
+v0.5.0 @wplaat
+- Improve data model (sequence are now unique per table)
+- Add missing products
