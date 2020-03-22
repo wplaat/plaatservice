@@ -36,9 +36,9 @@ public class ScoreDaoTest extends GeneralDaoTest  {
 	               
 		// Check Generated id's
 	    assertEquals(1, user1.getUid());
-	    assertEquals(1, product1.getPid()); 
-	    assertEquals(1, score1.getSid()); 
-	    assertEquals(2, score2.getSid());
+	    assertEquals(2, product1.getPid()); 
+	    assertEquals(3, score1.getSid()); 
+	    assertEquals(4, score2.getSid());
 	    
 	    List<Score> scores =  scoreDao.findByUserScore(user1, product1);
 	    

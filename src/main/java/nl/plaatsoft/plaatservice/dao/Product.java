@@ -17,7 +17,7 @@ public class Product {
     
 	/** The pid. */
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "pid")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private long pid;
     
 	/** The name. */
@@ -48,7 +48,6 @@ public class Product {
 		this.version = version;
 		this.os = os;
 	}
-	
 	
     /**
      * To string.

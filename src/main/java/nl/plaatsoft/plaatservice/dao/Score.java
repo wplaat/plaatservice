@@ -19,7 +19,7 @@ public class Score {
 
 	/** The sid. */
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sid")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private long sid;
     
     /** The product. */

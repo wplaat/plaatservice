@@ -17,7 +17,7 @@ public class User {
     
 	/** The uid. */
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "uid")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private long uid;
     
     /** The ip. */
