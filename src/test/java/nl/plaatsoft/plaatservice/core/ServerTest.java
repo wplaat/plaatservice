@@ -6,8 +6,8 @@ import java.io.IOException;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
 
 import org.junit.Before;
@@ -46,15 +46,16 @@ public class ServerTest {
 				
 		  Server server = new Server();		  
 		  server.start();
-		  		 		 		  
-		  HttpClient client = HttpClientBuilder.create().build();
+		  
+		  CloseableHttpClient client = HttpClientBuilder.create().build();
 		  HttpGet request = new HttpGet(url);
 		  request.addHeader("accept", "application/json");	          
 		  
 		  HttpResponse response = client.execute(request);	     
 		  	      
 	      assertTrue(response.getStatusLine().getStatusCode() == 200);
-	      
+	     
+	      client.close();
 	      server.stop();
 	}
 	
@@ -74,7 +75,7 @@ public class ServerTest {
 		  		 		 
 		  String testUrl = url + "?action=getProduct&product=PlaatService&version=1.0.0&os=Windows10";
 		  
-		  HttpClient client = HttpClientBuilder.create().build();
+		  CloseableHttpClient client = HttpClientBuilder.create().build();
 		  HttpGet request = new HttpGet(testUrl);
 		  request.addHeader("accept", "application/json");	          
 		  
@@ -82,6 +83,7 @@ public class ServerTest {
 		  	      
 	      assertTrue(response.getStatusLine().getStatusCode() == 200);
 	      
+	      client.close();
 	      server.stop();
 	}
 	
@@ -100,7 +102,7 @@ public class ServerTest {
 		  		 		 
 		  String testUrl = url + "?action=getUser&ip=127.0.0.1&username=wplaat&nickname=wplaat&country=netherlands&city=gouda";
 		  
-		  HttpClient client = HttpClientBuilder.create().build();
+		  CloseableHttpClient client = HttpClientBuilder.create().build();
 		  HttpGet request = new HttpGet(testUrl);
 		  request.addHeader("accept", "application/json");	          
 		  
@@ -108,6 +110,7 @@ public class ServerTest {
 		  
 	      assertTrue(response.getStatusLine().getStatusCode() == 200);
 	      
+	      client.close();
 	      server.stop();
 	}
 	
@@ -126,7 +129,7 @@ public class ServerTest {
 		  		 		 
 		  String testUrl = url + "?action=setUser&ip=127.0.0.1&username=wplaat&nickname=wplaat2";
 		  
-		  HttpClient client = HttpClientBuilder.create().build();
+		  CloseableHttpClient client = HttpClientBuilder.create().build();
 		  HttpGet request = new HttpGet(testUrl);
 		  request.addHeader("accept", "application/json");	          
 		  
@@ -134,6 +137,7 @@ public class ServerTest {
 		  
 	      assertTrue(response.getStatusLine().getStatusCode() == 200);
 	      
+	      client.close();
 	      server.stop();
 	}
 	
@@ -152,27 +156,31 @@ public class ServerTest {
 		  		 		 		  
 		  String testUrl1 = url + "?action=getUser&ip=127.0.0.1&username=wplaat&nickname=wplaat&country=netherlands&city=gouda";
 		  
-		  HttpClient client = HttpClientBuilder.create().build();
+		  CloseableHttpClient client1 = HttpClientBuilder.create().build();
 		  HttpGet request = new HttpGet(testUrl1);
 		  request.addHeader("accept", "application/json");	          		  
-		  HttpResponse response1 = client.execute(request);	   
+		  HttpResponse response1 = client1.execute(request);	   
 		  
 		  assertTrue(response1.getStatusLine().getStatusCode() == 200);
+		  
+		  client1.close();
 		  
 		  // -------
 		  		  
 		  String testUrl2 = url + "?action=getProduct&product=PlaatService&version=1.0.0&os=Windows10";
 		  
-		  HttpClient client2 = HttpClientBuilder.create().build();
+		  CloseableHttpClient client2 = HttpClientBuilder.create().build();
 		  HttpGet request2 = new HttpGet(testUrl2);
 		  request2.addHeader("accept", "application/json");	          		  
 		  HttpResponse response2 = client2.execute(request2);	   
 		  	      
 	      assertTrue(response2.getStatusLine().getStatusCode() == 200);
-	      	      
-		  // -------
+	      
+	      client2.close();
 		  
-		  HttpClient client3a = HttpClientBuilder.create().build();
+	      // -------
+		  
+	      CloseableHttpClient client3a = HttpClientBuilder.create().build();
 		  String testUrl3a = url + "?action=setScore&uid=1&pid=1&dt=1&score=1&level=1";
 		  
 		  HttpGet request3a = new HttpGet(testUrl3a);
@@ -181,9 +189,11 @@ public class ServerTest {
 	 
 	      assertTrue(response3a.getStatusLine().getStatusCode() == 200);
 	      
+	      client3a.close();
+	      
 	      // -------
 		  
-		  HttpClient client3b = HttpClientBuilder.create().build();
+	      CloseableHttpClient client3b = HttpClientBuilder.create().build();
 		  String testUrl3b = url + "?action=setScore&uid=1&pid=1&dt=1&score=2&level=1";
 		  
 		  HttpGet request3b = new HttpGet(testUrl3b);
@@ -192,9 +202,11 @@ public class ServerTest {
 	 
 	      assertTrue(response3b.getStatusLine().getStatusCode() == 200);
 	      
+	      client3b.close();
+	      
 	      // -------
 		  
-		  HttpClient client3c = HttpClientBuilder.create().build();
+	      CloseableHttpClient client3c = HttpClientBuilder.create().build();
 		  String testUrl3c = url + "?action=setScore&uid=1&pid=1&dt=1&score=3&level=1";
 		  
 		  HttpGet request3c = new HttpGet(testUrl3c);
@@ -203,9 +215,11 @@ public class ServerTest {
 	 
 	      assertTrue(response3c.getStatusLine().getStatusCode() == 200);
 	      	      
+	      client3c.close();
+	      
 	      // -------
 		  
-		  HttpClient client4 = HttpClientBuilder.create().build();
+	      CloseableHttpClient client4 = HttpClientBuilder.create().build();
 		  String testUrl4 = url + "?action=getLocalScore&uid=1&pid=1";
 		  
 		  HttpGet request4 = new HttpGet(testUrl4);
@@ -213,6 +227,8 @@ public class ServerTest {
 		  HttpResponse response4 = client4.execute(request4);	   
 		  		  
 	      assertTrue(response4.getStatusLine().getStatusCode() == 200);
+	      
+	      client4.close();
 	      
 	      server.stop();
 	}
@@ -232,27 +248,31 @@ public class ServerTest {
 		  		 		 		  
 		  String testUrl1 = url + "?action=getUser&ip=127.0.0.1&username=wplaat&nickname=wplaat&country=netherlands&city=gouda";
 		  
-		  HttpClient client = HttpClientBuilder.create().build();
+		  CloseableHttpClient client1 = HttpClientBuilder.create().build();
 		  HttpGet request = new HttpGet(testUrl1);
 		  request.addHeader("accept", "application/json");	          		  
-		  HttpResponse response1 = client.execute(request);	   
+		  HttpResponse response1 = client1.execute(request);	   
 		  
 		  assertTrue(response1.getStatusLine().getStatusCode() == 200);
+		  
+		  client1.close();
 		  
 		  // -------
 		  		  
 		  String testUrl2 = url + "?action=getProduct&product=PlaatService&version=1.0.0&os=Windows10";
 		  
-		  HttpClient client2 = HttpClientBuilder.create().build();
+		  CloseableHttpClient client2 = HttpClientBuilder.create().build();
 		  HttpGet request2 = new HttpGet(testUrl2);
 		  request2.addHeader("accept", "application/json");	          		  
 		  HttpResponse response2 = client2.execute(request2);	   
 		  	      
 	      assertTrue(response2.getStatusLine().getStatusCode() == 200);
-	      	      
+	      	     
+	      client2.close();
+	      
 		  // -------
 		  
-		  HttpClient client3a = HttpClientBuilder.create().build();
+	      CloseableHttpClient client3a = HttpClientBuilder.create().build();
 		  String testUrl3a = url + "?action=setScore&uid=1&pid=1&dt=1&score=1&level=1";
 		  
 		  HttpGet request3a = new HttpGet(testUrl3a);
@@ -261,9 +281,11 @@ public class ServerTest {
 	 
 	      assertTrue(response3a.getStatusLine().getStatusCode() == 200);
 	      
+	      client3a.close();
+	      
 	      // -------
 		  
-		  HttpClient client3b = HttpClientBuilder.create().build();
+	      CloseableHttpClient client3b = HttpClientBuilder.create().build();
 		  String testUrl3b = url + "?action=setScore&uid=1&pid=1&dt=1&score=2&level=1";
 		  
 		  HttpGet request3b = new HttpGet(testUrl3b);
@@ -272,9 +294,11 @@ public class ServerTest {
 	 
 	      assertTrue(response3b.getStatusLine().getStatusCode() == 200);
 	      
+	      client3b.close();
+	      
 	      // -------
 		  
-		  HttpClient client3c = HttpClientBuilder.create().build();
+	      CloseableHttpClient client3c = HttpClientBuilder.create().build();
 		  String testUrl3c = url + "?action=setScore&uid=1&pid=1&dt=1&score=3&level=1";
 		  
 		  HttpGet request3c = new HttpGet(testUrl3c);
@@ -283,9 +307,11 @@ public class ServerTest {
 	 
 	      assertTrue(response3c.getStatusLine().getStatusCode() == 200);
 	      	      
+	      client3c.close();
+	      
 	      // -------
 		  
-		  HttpClient client4 = HttpClientBuilder.create().build();
+	      CloseableHttpClient client4 = HttpClientBuilder.create().build();
 		  String testUrl4 = url + "?action=getGlobalScore&pid=1";
 		  
 		  HttpGet request4 = new HttpGet(testUrl4);
@@ -293,6 +319,8 @@ public class ServerTest {
 		  HttpResponse response4 = client4.execute(request4);	   
 		  		  
 	      assertTrue(response4.getStatusLine().getStatusCode() == 200);
+	      
+	      client4.close();
 	      
 	      server.stop();
 	}
