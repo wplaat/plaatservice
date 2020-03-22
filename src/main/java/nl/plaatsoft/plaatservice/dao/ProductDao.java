@@ -4,6 +4,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
+import javax.persistence.NonUniqueResultException;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -73,8 +75,16 @@ public class ProductDao {
    		
     		 return Optional.of(product);
     		 
-    	 } catch (Exception e) {
+    	 } catch (NonUniqueResultException e) {
     		 
+    		 log.error(e.getMessage());
+    		 
+    		 return Optional.empty();
+    		 
+    	 } catch (NoResultException e) {
+    		     		 
+    		 log.warn(e.getMessage());
+    	 
     		 // Not found, create it!
     		 Product product = new Product(name, version, os);
     		 return save(product);

@@ -55,15 +55,44 @@ public class ProductDaoTest extends GeneralDaoTest {
 	               
 	    Optional<Product> product =  productDao.findByName("PlaatService", "0.7.0", "Windows10");
 	    assertEquals("0.7.0", product.get().getVersion());   
+	    
+	    List<Product> products = productDao.findAll();        
+        assertEquals(3, products.size());      
 	}
-	
-	
-	
+		
 	/**
-	 * Find by name 2.
+	 * Find by name 2
 	 */
 	@Test
 	public void findByName2() {
+		    	        	        		
+	    productDao.save(new Product("PlaatService", "1.3.0", "Windows10"));
+	    productDao.save(new Product("PlaatService", "1.4.0", "Windows10"));
+	               
+	    // New entry is created
+	    Optional<Product> product =  productDao.findByName("PlaatService", "1.4.0", "Windows10");
+	    assertTrue(product.isPresent()==true);   
+	    assertEquals("1.4.0", product.get().getVersion().toString());
+	    
+	    List<Product> products = productDao.findAll();        
+        assertEquals(2, products.size());      
+	}
+		
+	/**
+	 * Find by name 3
+	 */
+	@Test
+	public void findByName3() {
+			        	        	               
+        Optional<Product> product =  productDao.findByName("PlaatService", "1.5.0", "Windows10");
+        assertEquals("1.5.0", product.get().getVersion().toString());   
+	}
+		
+	/**
+	 * Find by name 4.
+	 */
+	@Test
+	public void findByName4() {
 		    	 		
 	    productDao.save(new Product("PlaatService", "0.7.0", "Windows10"));
 	    productDao.save(new Product("PlaatService", "0.8.0", "Windows10"));
@@ -76,29 +105,17 @@ public class ProductDaoTest extends GeneralDaoTest {
 	    assertEquals("1.2.0", product.get().getVersion());   
 	}
 	
-	
 	/**
-	 * Find by name not found
+	 * Find by name Error.
 	 */
 	@Test
-	public void findByNameNotFound () {
-		    	        	        		
-	    productDao.save(new Product("PlaatService", "1.3.0", "Windows10"));
-	    productDao.save(new Product("PlaatService", "1.4.0", "Windows10"));
+	public void findByNameError() {
+		    	        	   		
+	    productDao.save(new Product("PlaatService", "0.5.0", "Windows10"));
+	    productDao.save(new Product("PlaatService", "0.5.0", "Windows10"));
 	               
-	    // New entry is created
-	    Optional<Product> product =  productDao.findByName("PlaatService", "1.4.0", "Windows10");
-	    assertTrue(product.isPresent()==true);   
-	    assertEquals("1.4.0", product.get().getVersion().toString());  
+	    Optional<Product> product =  productDao.findByName("PlaatService", "0.5.0", "Windows10");
+	    assertTrue(product.isPresent()==false);     
 	}
-	
-	/**
-	 * Find by name null.
-	 */
-	@Test
-	public void findByNameNull() {
-			        	        	               
-        Optional<Product> product =  productDao.findByName("PlaatService", "1.5.0", "Windows10");
-        assertEquals("1.5.0", product.get().getVersion().toString());   
-	}
+
 }

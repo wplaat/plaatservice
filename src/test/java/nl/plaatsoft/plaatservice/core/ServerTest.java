@@ -63,7 +63,7 @@ public class ServerTest {
 		server.stop();
 		
 		// Workarround else unittest fail in Jenkins.
-	    sleep(2000);
+	    sleep(1000);
 	}
 	
 	/**

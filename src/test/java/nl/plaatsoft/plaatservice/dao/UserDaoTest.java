@@ -61,9 +61,12 @@ public class UserDaoTest extends GeneralDaoTest  {
 	    Optional<User> user =  userDao.findByName("127.0.0.1", "wplaat", "willie", "Netherlands", "Gouda");
 	    
 	    assertEquals(user1.getUid(), user.get().getUid());   
+	    
+	    List<User> users = userDao.findAll();
+        
+        assertEquals(2, users.size());      
 	}
-	
-	
+		
 	/**
 	 * Find new user
 	 */
@@ -81,5 +84,23 @@ public class UserDaoTest extends GeneralDaoTest  {
 	    
 	    assertTrue(user.isPresent()==true);   
 	    assertEquals(3, user.get().getUid());   
+	    
+	    List<User> users = userDao.findAll();
+        
+        assertEquals(3, users.size());      
+	}
+	
+	/**
+	 * Find existing user
+	 */
+	@Test
+	public void findbyNameError() {
+		    	        	        
+		userDao.save(new User("127.0.0.1", "wplaat", "willie", "Netherlands", "Gouda"));
+		userDao.save(new User("127.0.0.1", "wplaat", "willie", "Netherlands", "Gouda"));
+	               		
+	    Optional<User> user =  userDao.findByName("127.0.0.1", "wplaat", "willie", "Netherlands", "Gouda");
+	    
+	    assertTrue(user.isPresent()==false);       
 	}
 }
